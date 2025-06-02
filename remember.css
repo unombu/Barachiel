@@ -1,0 +1,212 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'VT323', monospace;
+    height: 100vh;
+    overflow: hidden;
+    color: #707070;
+    position: relative;
+}
+
+.background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-CWaggDeCEj3qyRSgw9ZvVWPoBi2oNE.png');
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.7);
+    z-index: -1;
+}
+
+.terminal-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 800px;
+    height: 70%;
+    background-color: rgba(0, 0, 0, 0.85);
+    border: 2px solid #33ff33;
+    border-radius: 5px;
+    box-shadow: 0 0 20px rgba(51, 255, 51, 0.5);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.terminal-header {
+    background-color: #111;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #33ff33;
+}
+
+.terminal-title {
+    color: #29cc29;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    text-shadow: 0 0 5px #33ff33;
+}
+
+.terminal-controls {
+    display: flex;
+}
+
+.control {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    margin-left: 8px;
+    border: 1px solid #33ff33;
+}
+
+.minimize {
+    background-color: #33ff33;
+    opacity: 0.7;
+}
+
+.maximize {
+    background-color: #33ff33;
+    opacity: 0.7;
+}
+
+.close {
+    background-color: #ff3333;
+    opacity: 0.7;
+}
+
+.terminal-content {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+#output {
+    flex: 1;
+    margin-bottom: 10px;
+    overflow-y: auto;
+    line-height: 1.4;
+}
+
+.input-line {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+}
+
+.prompt {
+    color: #777777;
+    margin-right: 8px;
+    font-size: 1.2rem;
+}
+
+#terminal-input {
+    background: transparent;
+    border: none;
+    color: #33ff33;
+    font-family: 'VT323', monospace;
+    font-size: 1.2rem;
+    width: 100%;
+    outline: none;
+    caret-color: #33ff33;
+}
+
+.terminal-options {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 15px;
+    gap: 10px;
+    border-top: 1px solid #7e7e7e;
+    justify-content: center;
+    align-items: center;
+}
+
+.option-box {
+    background-color: rgba(0, 0, 0, 0.7);
+    border: 2px solid #7e7e7e;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.option-box:hover {
+    background-color: rgba(51, 255, 51, 0.2);
+    box-shadow: 0 0 10px rgba(131, 131, 131, 0.7);
+}
+
+.option-number {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-color: #797979;
+    color: #000;
+    text-align: center;
+    line-height: 20px;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+/* Estilo para el cursor parpadeante */
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+.cursor {
+    display: inline-block;
+    width: 8px;
+    height: 16px;
+    background-color: #33ff33;
+    margin-left: 2px;
+    animation: blink 1s infinite;
+}
+
+/* Estilo para mensajes del sistema */
+.system-message {
+    color: #ffcc00;
+}
+
+/* Estilo para mensajes de error */
+.error-message {
+    color: #ff3333;
+}
+
+/* Estilo para mensajes de éxito */
+.success-message {
+    color: #29cc29;
+}
+
+/* Scrollbar personalizado */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #33ff33;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #29cc29;
+}
