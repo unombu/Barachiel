@@ -280,6 +280,14 @@ const options = {
 
 exports.handler = function(event, context) {
 
+    if (isNaN(optionID) || isNaN(lastOptionId)) {
+    console.log("Parámetros inválidos");
+    return {
+        statusCode: 400,
+        body: JSON.stringify({ error: "Parámetros inválidos" })
+    };
+}
+
     console.log("Query params:", event.queryStringParameters);
 
     let optionID = parseInt(event.queryStringParameters.i);
