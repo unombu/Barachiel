@@ -307,7 +307,7 @@ exports.handler = function(event, context) {
         };
     } else {
         return {
-            statusCode: 200, // Código de estado HTTP 200 (OK)
+            statusCode: 403, // Código de estado HTTP 403 (Forbidden)
             headers: {
                 "Content-Type": "application/json",
                 "Access-Control-Allow-Origin": "*",
@@ -321,7 +321,7 @@ exports.handler = function(event, context) {
 
 function anticheats(lastid, currentid){
     let lastOp = options[lastid];
-    let lastResponse = lastOp.reponse;
+    let lastResponse = responses[lastOp.response];
     if (lastResponse.options.includes(currentid)) {
         return true;
     }
