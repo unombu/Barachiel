@@ -237,7 +237,7 @@ async function processSelectedOption() {
 
     } catch (error) {
         console.error('Problemas de backend lpm', error);
-        messageDiv.textContent = 'Error al cargar el backend. Inténtalo de nuevo. Son la 1:15am imsorry';
+        // messageDiv.textContent = 'Error al cargar el backend. Inténtalo de nuevo. Son la 1:15am imsorry';
     }
     showResponse(res);
 }
