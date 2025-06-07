@@ -6,9 +6,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // Variables para controlar la velocidad de escritura
   const typingSpeed = 15 // milisegundos entre caracteres
   let isTyping = false
-  let j = 1;
-
-  
 
   // Función para manejar la selección de una opción
   function handleOptionSelect(option) {
@@ -155,6 +152,8 @@ inputElement.addEventListener("keydown", (event) => {
   })
 })
 
+let i = 1;
+let j = 1;
 
 async function processInput() {
     try {
