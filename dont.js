@@ -25,38 +25,38 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Función para procesar el input del usuario
-  function processInput(input) {
-    typeText(`> ${input}`)
+  // function processInput(input) {
+  //   typeText(`> ${input}`)
 
-    // Aquí puedes agregar la lógica para procesar los comandos
-    if (input.toLowerCase() === "help") {
-      setTimeout(() => {
-        systemMessage("Commands: help, options, clear, dialogue, list, multiple")
-      }, 500)
-    } else if (input.toLowerCase() === "options") {
-      setTimeout(() => {
-        showSimpleOptions()
-      }, 500)
-    } else if (input.toLowerCase() === "multiple") {
-      setTimeout(() => {
-        showMultipleOptions()
-      }, 500)
-    } else if (input.toLowerCase() === "clear") {
-      outputElement.innerHTML = ""
-    } else if (input.toLowerCase() === "dialogue") {
-      setTimeout(() => {
-        startExampleDialog()
-      }, 500)
-    } else if (input.toLowerCase() === "list") {
-      setTimeout(() => {
-        numberedList(["Una persona debe ser racional o consciente de sí misma.", "Una persona debe ser consciente."])
-      }, 500)
-    } else {
-      setTimeout(() => {
-        errorMessage(`Comando no reconocido: "${input}"`)
-      }, 500)
-    }
-  }
+  //   // Aquí puedes agregar la lógica para procesar los comandos
+  //   if (input.toLowerCase() === "help") {
+  //     setTimeout(() => {
+  //       systemMessage("Commands: help, options, clear, dialogue, list, multiple")
+  //     }, 500)
+  //   } else if (input.toLowerCase() === "options") {
+  //     setTimeout(() => {
+  //       showSimpleOptions()
+  //     }, 500)
+  //   } else if (input.toLowerCase() === "multiple") {
+  //     setTimeout(() => {
+  //       showMultipleOptions()
+  //     }, 500)
+  //   } else if (input.toLowerCase() === "clear") {
+  //     outputElement.innerHTML = ""
+  //   } else if (input.toLowerCase() === "dialogue") {
+  //     setTimeout(() => {
+  //       startExampleDialog()
+  //     }, 500)
+  //   } else if (input.toLowerCase() === "list") {
+  //     setTimeout(() => {
+  //       numberedList(["Una persona debe ser racional o consciente de sí misma.", "Una persona debe ser consciente."])
+  //     }, 500)
+  //   } else {
+  //     setTimeout(() => {
+  //       errorMessage(`Comando no reconocido: "${input}"`)
+  //     }, 500)
+  //   }
+  // }
 
   // Ejemplo de opciones simples (2 opciones)
   function showSimpleOptions() {
@@ -220,16 +220,14 @@ function showOptions(options) {
     optionsContainer.appendChild(optionBox)
   })
 }
-processInput();
-
-
+processSelectedOption();
 
 })
 
 let i = 1;
 let j = 1;
 
-async function processInput() {
+async function processSelectedOption() {
     try {
         const response = await fetch(`/.netlify/functions/in_the_begining_were_the_words?i=${i,j}`); //CAMBIAR EL LINK CUANDO HAGA LO DE NETLIFY
         if (!response.ok) {
