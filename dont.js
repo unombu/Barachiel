@@ -148,7 +148,8 @@ async function processSelectedOption() {
         opciones = data.opciones;
         console.log('Respuesta:', res);
         console.log('Opciones:', opciones);
-
+        showResponse(res);
+        showOptions(opciones);
     } catch (error) {
         console.error('Problemas de backend lpm', error);
         // messageDiv.textContent = 'Error al cargar el backend. Inténtalo de nuevo. Son la 1:15am imsorry';
@@ -158,7 +159,7 @@ async function processSelectedOption() {
 
 async function showResponse(response) {
     for (res in response) {
-        await systemMessage("> A frog is conscious.")
+        await systemMessage(res);
     }
 }
 
