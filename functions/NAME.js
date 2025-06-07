@@ -279,10 +279,18 @@ const options = {
 };
 
 exports.handler = function(event, context) {
+
+    console.log("Query params:", event.queryStringParameters);
+
     let optionID = parseInt(event.queryStringParameters.i);
     let lastOptionId = parseInt(event.queryStringParameters.j);
+
+    console.log("Parsed IDs:", { optionID, lastOptionId });
     
     if ( anticheats(lastOptionId, optionID) ) {
+
+        console.log('funciona anticheats')
+
         let selectedOption = options[optionID];
         let res = responses[selectedOption.response];
         
@@ -322,6 +330,10 @@ exports.handler = function(event, context) {
 function anticheats(lastid, currentid){
     let lastOp = options[lastid];
     let lastResponse = responses[lastOp.response];
+
+    console.log(lastOp)
+    console.log(lastResponse)
+
     if (lastResponse.options.includes(currentid)) {
         return true;
     }
