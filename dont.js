@@ -137,7 +137,8 @@ processSelectedOption();
 
 async function processSelectedOption() {
     try {
-        const response = await fetch(`/.netlify/functions/NAME?i=${i}&j=${j}`); //CAMBIAR EL LINK CUANDO HAGA LO DE NETLIFY
+        //const response = await fetch(`/.netlify/functions/NAME?i=${i}&j=${j}`); 
+        const response = await fetch(`/.netlify/functions/NAME?i=1&j=1`);
         console.log(response);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
