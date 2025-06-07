@@ -280,6 +280,19 @@ exports.handler = function(event, context) {
         }
     };
 
+    function anticheats(lastid, currentid){
+        let lastOp = options[lastid];
+        let lastResponse = responses[lastOp.response];
+
+        console.log(lastOp)
+        console.log(lastResponse)
+
+        if (lastResponse.options.includes(currentid)) {
+            return true;
+        }
+        return false;
+    }
+
 
     console.log("Query params:", event.queryStringParameters);
 
@@ -350,17 +363,4 @@ exports.handler = function(event, context) {
             body: JSON.stringify({response : "tramposo detectado"})
         };
     }
-}
-
-function anticheats(lastid, currentid){
-    let lastOp = options[lastid];
-    let lastResponse = responses[lastOp.response];
-
-    console.log(lastOp)
-    console.log(lastResponse)
-
-    if (lastResponse.options.includes(currentid)) {
-        return true;
-    }
-    return false;
 }
