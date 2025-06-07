@@ -312,6 +312,7 @@ exports.handler = function(event, context) {
             opciones : opt,
             response : res.response
         }
+        console.log(response);
         return {
             statusCode: 200, // Código de estado HTTP 200 (OK)
             headers: {
