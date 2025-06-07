@@ -226,14 +226,15 @@ processSelectedOption();
 async function processSelectedOption() {
     try {
         const response = await fetch(`/.netlify/functions/NAME?i=${i}&j=${j}`); //CAMBIAR EL LINK CUANDO HAGA LO DE NETLIFY
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        res = data.response;
-        opciones = data.opciones;
-        console.log('Respuesta:', res);
-        console.log('Opciones:', opciones);
+        console.log(response);
+        // if (!response.ok) {
+        //     throw new Error(`HTTP error! status: ${response.status}`);
+        // }
+        // const data = await response.json();
+        // res = data.response;
+        // opciones = data.opciones;
+        // console.log('Respuesta:', res);
+        // console.log('Opciones:', opciones);
 
     } catch (error) {
         console.error('Problemas de backend lpm', error);
