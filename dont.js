@@ -1,31 +1,15 @@
+const outputElement = document.getElementById("output")
+const inputElement = document.getElementById("terminal-input")
+const optionsContainer = document.getElementById("options-container")
 let i = 1;
 let j = 1;
-document.addEventListener("DOMContentLoaded", () => {
-  console.log('volviendo a cargar el DOM')
-  const outputElement = document.getElementById("output")
-  const inputElement = document.getElementById("terminal-input")
-  const optionsContainer = document.getElementById("options-container")
-
-  // Variables para controlar la velocidad de escritura
+// Variables para controlar la velocidad de escritura
   const typingSpeed = 15 // milisegundos entre caracteres
   let isTyping = false
 
-  // Función para manejar la selección de una opción
-  function handleOptionSelect(option) {
-    typeText(`> ${option.text}`)
+document.addEventListener("DOMContentLoaded", () => {
+  console.log('volviendo a cargar el DOM')
 
-    // Limpiar opciones después de seleccionar
-    setTimeout(() => {
-      optionsContainer.innerHTML = ""
-    }, 500)
-
-    // Aquí puedes agregar la lógica para manejar la opción seleccionada
-    if (option.action) {
-      setTimeout(() => {
-        option.action()
-      }, 1000)
-    }
-  }
 
   // Función para procesar el input del usuario
   // function processInput(input) {
@@ -62,73 +46,65 @@ document.addEventListener("DOMContentLoaded", () => {
   // }
 
   // Ejemplo de opciones simples (2 opciones)
-  function showSimpleOptions() {
-    const options = [
-      {
-        text: "Sí.",
-        action: () => systemMessage('Has elegido "Sí".'),
-      },
-      {
-        text: "No.",
-        action: () => systemMessage('Has elegido "No".'),
-      },
-    ]
+  // function showSimpleOptions() {
+  //   const options = [
+  //     {
+  //       text: "Sí.",
+  //       action: () => systemMessage('Has elegido "Sí".'),
+  //     },
+  //     {
+  //       text: "No.",
+  //       action: () => systemMessage('Has elegido "No".'),
+  //     },
+  //   ]
 
-    showOptions(options)
-  }
+  //   showOptions(options)
+  // }
 
   // Ejemplo de múltiples opciones (6 opciones)
-  function showMultipleOptions() {
-    const options = [
-      {
-        text: "AT_feedback.eml",
-        action: () => systemMessage("Abriendo archivo AT_feedback.eml..."),
-      },
-      {
-        text: "team_leads.eml",
-        action: () => systemMessage("Abriendo archivo team_leads.eml..."),
-      },
-      {
-        text: "straton_of_stageira.wiki",
-        action: () => systemMessage("Abriendo archivo straton_of_stageira.wiki..."),
-      },
-      {
-        text: "library_session.log",
-        action: () => systemMessage("Abriendo archivo library_session.log..."),
-      },
-      {
-        text: "distributed_resources.dat",
-        action: () => systemMessage("Abriendo archivo distributed_resources.dat..."),
-      },
-      {
-        text: "exit",
-        action: () => errorMessage("Cerrando sesión..."),
-      },
-    ]
+  // function showMultipleOptions() {
+  //   const options = [
+  //     {
+  //       text: "AT_feedback.eml",
+  //       action: () => systemMessage("Abriendo archivo AT_feedback.eml..."),
+  //     },
+  //     {
+  //       text: "team_leads.eml",
+  //       action: () => systemMessage("Abriendo archivo team_leads.eml..."),
+  //     },
+  //     {
+  //       text: "straton_of_stageira.wiki",
+  //       action: () => systemMessage("Abriendo archivo straton_of_stageira.wiki..."),
+  //     },
+  //     {
+  //       text: "library_session.log",
+  //       action: () => systemMessage("Abriendo archivo library_session.log..."),
+  //     },
+  //     {
+  //       text: "distributed_resources.dat",
+  //       action: () => systemMessage("Abriendo archivo distributed_resources.dat..."),
+  //     },
+  //     {
+  //       text: "exit",
+  //       action: () => errorMessage("Cerrando sesión..."),
+  //     },
+  //   ]
 
-    showOptions(options)
-  }
+  //   showOptions(options)
+  // }
 
 // CAMBIAR NOMBRE A SHOW RESPONSE o PROCESS RESPONSE
 
-
-async function showResponse(response) {
-    for (res in response) {
-        await systemMessage("> A frog is conscious.")
-    }
-}
-
-
 // Manejar el envío del formulario
-inputElement.addEventListener("keydown", (event) => {
-    if (event.key === "Enter" && !isTyping) {
-        const input = inputElement.value.trim()
-        if (input) {
-        processInput(input)
-        inputElement.value = ""
-        }
-    }
-})
+// inputElement.addEventListener("keydown", (event) => {
+//     if (event.key === "Enter" && !isTyping) {
+//         const input = inputElement.value.trim()
+//         if (input) {
+//         processInput(input)
+//         inputElement.value = ""
+//         }
+//     }
+// })
 
   // Mensaje de bienvenida al cargar la página
   setTimeout(() => {
@@ -150,9 +126,57 @@ inputElement.addEventListener("keydown", (event) => {
   }, 500)
 
   // Mantener el foco en el input
-  document.addEventListener("click", () => {
-    inputElement.focus()
-  })
+  // document.addEventListener("click", () => {
+  //   inputElement.focus()
+  // })
+
+
+processSelectedOption();
+
+})
+
+async function processSelectedOption() {
+    try {
+        const response = await fetch(`/.netlify/functions/NAME?i=${i}&j=${j}`); //CAMBIAR EL LINK CUANDO HAGA LO DE NETLIFY
+        console.log(response);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        res = data.response;
+        opciones = data.opciones;
+        console.log('Respuesta:', res);
+        console.log('Opciones:', opciones);
+
+    } catch (error) {
+        console.error('Problemas de backend lpm', error);
+        // messageDiv.textContent = 'Error al cargar el backend. Inténtalo de nuevo. Son la 1:15am imsorry';
+    }
+    showResponse(res);
+}
+
+async function showResponse(response) {
+    for (res in response) {
+        await systemMessage("> A frog is conscious.")
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Función para escribir texto con efecto de delay
 function typeText(text, className = "") {
@@ -223,25 +247,21 @@ function showOptions(options) {
     optionsContainer.appendChild(optionBox)
   })
 }
-processSelectedOption();
-async function processSelectedOption() {
-    try {
-        const response = await fetch(`https://barachiel.netlify.app/.netlify/functions/NAME?i=${i}&j=${j}`); //CAMBIAR EL LINK CUANDO HAGA LO DE NETLIFY
-        console.log(response);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        res = data.response;
-        opciones = data.opciones;
-        console.log('Respuesta:', res);
-        console.log('Opciones:', opciones);
 
-    } catch (error) {
-        console.error('Problemas de backend lpm', error);
-        // messageDiv.textContent = 'Error al cargar el backend. Inténtalo de nuevo. Son la 1:15am imsorry';
+// Función para manejar la selección de una opción
+  function handleOptionSelect(option) {
+    typeText(`> ${option.text}`)
+
+    // Limpiar opciones después de seleccionar
+    setTimeout(() => {
+      optionsContainer.innerHTML = ""
+    }, 500)
+
+    // Aquí puedes agregar la lógica para manejar la opción seleccionada
+    if (option.action) {
+      setTimeout(() => {
+        option.action()
+      }, 1000)
     }
-    showResponse(res);
-}
-})
+  }
 
