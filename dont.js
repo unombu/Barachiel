@@ -150,37 +150,8 @@ inputElement.addEventListener("keydown", (event) => {
   document.addEventListener("click", () => {
     inputElement.focus()
   })
-})
 
-let i = 1;
-let j = 1;
-
-async function processInput() {
-    try {
-        const response = await fetch(`/.netlify/functions/in_the_begining_were_the_words?i=${i,j}`); //CAMBIAR EL LINK CUANDO HAGA LO DE NETLIFY
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        res = data.response;
-        opciones = data.opciones;
-        console.log('Respuesta:', res);
-        console.log('Opciones:', opciones);
-
-    } catch (error) {
-        console.error('Problemas de backend lpm', error);
-        messageDiv.textContent = 'Error al cargar el backend. Inténtalo de nuevo. Son la 1:15am imsorry';
-    }
-    showResponse(res);
-
-    showOptions([
-        { text: "Sí.", action: () => handleYesResponse() },
-        { text: "No.", action: () => handleNoResponse() },
-    ])
-}
-
-
-// Función para escribir texto con efecto de delay
+  // Función para escribir texto con efecto de delay
 function typeText(text, className = "") {
   return new Promise((resolve) => {
     isTyping = true
@@ -248,4 +219,36 @@ function showOptions(options) {
 
     optionsContainer.appendChild(optionBox)
   })
+}
+processInput();
+
+
+
+})
+
+let i = 1;
+let j = 1;
+
+async function processInput() {
+    try {
+        const response = await fetch(`/.netlify/functions/in_the_begining_were_the_words?i=${i,j}`); //CAMBIAR EL LINK CUANDO HAGA LO DE NETLIFY
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        res = data.response;
+        opciones = data.opciones;
+        console.log('Respuesta:', res);
+        console.log('Opciones:', opciones);
+
+    } catch (error) {
+        console.error('Problemas de backend lpm', error);
+        messageDiv.textContent = 'Error al cargar el backend. Inténtalo de nuevo. Son la 1:15am imsorry';
+    }
+    showResponse(res);
+
+    showOptions([
+        { text: "Sí.", action: () => handleYesResponse() },
+        { text: "No.", action: () => handleNoResponse() },
+    ])
 }
