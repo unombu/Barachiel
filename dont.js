@@ -1,3 +1,5 @@
+let i = 1;
+let j = 1;
 document.addEventListener("DOMContentLoaded", () => {
   const outputElement = document.getElementById("output")
   const inputElement = document.getElementById("terminal-input")
@@ -240,7 +242,4 @@ async function processSelectedOption() {
     showResponse(res);
 }
 })
-
-let i = 1;
-let j = 1;
 
