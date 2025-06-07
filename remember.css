@@ -1,212 +1,229 @@
-@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap");
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    font-family: 'VT323', monospace;
-    height: 100vh;
-    overflow: hidden;
-    color: #707070;
-    position: relative;
+  font-family: "Courier Prime", monospace;
+  height: 100vh;
+  overflow: hidden;
+  background-image: url("laptop-background.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
-.background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-CWaggDeCEj3qyRSgw9ZvVWPoBi2oNE.png');
-    background-size: cover;
-    background-position: center;
-    filter: brightness(0.7);
-    z-index: -1;
+.scene-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
 }
 
-.terminal-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 80%;
-    max-width: 800px;
-    height: 70%;
-    background-color: rgba(0, 0, 0, 0.85);
-    border: 2px solid #33ff33;
-    border-radius: 5px;
-    box-shadow: 0 0 20px rgba(51, 255, 51, 0.5);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-}
-
-.terminal-header {
-    background-color: #111;
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #33ff33;
-}
-
-.terminal-title {
-    color: #29cc29;
-    font-size: 1.2rem;
-    letter-spacing: 1px;
-    text-shadow: 0 0 5px #33ff33;
-}
-
-.terminal-controls {
-    display: flex;
-}
-
-.control {
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-    margin-left: 8px;
-    border: 1px solid #33ff33;
-}
-
-.minimize {
-    background-color: #33ff33;
-    opacity: 0.7;
-}
-
-.maximize {
-    background-color: #33ff33;
-    opacity: 0.7;
-}
-
-.close {
-    background-color: #ff3333;
-    opacity: 0.7;
+.laptop-screen {
+  width: 50%;
+  height: 63%;
+  background-color: #000;
+  border: 3px solid #666;
+  border-radius: 8px;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  margin-left: 15px;
+  margin-bottom: 10%;
+  padding-bottom: 8%;
 }
 
 .terminal-content {
-    flex: 1;
-    padding: 15px;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
+  flex: 1;
+  padding: 15px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+  line-height: 1.4;
+  color: #e0e0e0;
 }
 
 #output {
-    flex: 1;
-    margin-bottom: 10px;
-    overflow-y: auto;
-    line-height: 1.4;
+  flex: 1;
+  margin-bottom: 8px;
+  overflow-y: auto;
 }
 
 .input-line {
-    display: flex;
-    align-items: center;
-    margin-top: 5px;
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
 }
 
 .prompt {
-    color: #777777;
-    margin-right: 8px;
-    font-size: 1.2rem;
+  color: #e0e0e0;
+  margin-right: 6px;
 }
 
 #terminal-input {
-    background: transparent;
-    border: none;
-    color: #33ff33;
-    font-family: 'VT323', monospace;
-    font-size: 1.2rem;
-    width: 100%;
-    outline: none;
-    caret-color: #33ff33;
+  background: transparent;
+  border: none;
+  color: #e0e0e0;
+  font-family: "Courier Prime", monospace;
+  font-size: 12px;
+  width: 100%;
+  outline: none;
+  caret-color: #e0e0e0;
+}
+
+/* .terminal-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 8px;
+  padding: 10px 15px;
+  border-top: 1px solid #333;
+  background-color: rgba(0, 0, 0, 0.9);
+} */
+
+.option-box {
+  background-color: #1a1a1a;
+  border: 1px solid #444;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 11px;
+  font-family: "Courier Prime", monospace;
+  color: #e0e0e0;
+  text-align: center;
+  position: relative;
+  height: 35px; /* Altura fija */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .terminal-options {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 15px;
-    gap: 10px;
-    border-top: 1px solid #7e7e7e;
-    justify-content: center;
-    align-items: center;
-}
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* O repeat(2, 1fr); es lo mismo */
+  /* grid-template-columns: repeat(2, 1fr);  <- También válido */
+  gap: 8px;
+  padding: 10px 15px;
+  border-top: 1px solid #333;
+  background-color: rgba(0, 0, 0, 0.9);
 
-.option-box {
-    background-color: rgba(0, 0, 0, 0.7);
-    border: 2px solid #7e7e7e;
-    padding: 10px 15px;
-    cursor: pointer;
-    transition: all 0.3s;
-    font-size: 1rem;
-    display: flex;
-    align-items: center;
+  /* Para que el contenedor ocupe todo el ancho disponible del padre */
+  width: 100%; 
+  /* Para que el contenedor ocupe la altura disponible,
+     su padre (y ancestros hasta html, body) deben tener altura definida. */
+  height: 10%; 
 }
 
 .option-box:hover {
-    background-color: rgba(51, 255, 51, 0.2);
-    box-shadow: 0 0 10px rgba(131, 131, 131, 0.7);
+  background-color: #2a2a2a;
+  border-color: #666;
 }
 
-.option-number {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    background-color: #797979;
-    color: #000;
-    text-align: center;
-    line-height: 20px;
-    margin-right: 10px;
-    font-weight: bold;
+.option-box .full-text {
+  display: none;
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #000;
+  border: 1px solid #666;
+  padding: 8px 12px;
+  white-space: nowrap;
+  z-index: 1000;
+  font-size: 11px;
+  margin-bottom: 5px;
+  border-radius: 3px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
 }
 
-/* Estilo para el cursor parpadeante */
-@keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
-}
-
-.cursor {
-    display: inline-block;
-    width: 8px;
-    height: 16px;
-    background-color: #33ff33;
-    margin-left: 2px;
-    animation: blink 1s infinite;
+.option-box:hover .full-text {
+  display: block;
 }
 
 /* Estilo para mensajes del sistema */
 .system-message {
-    color: #ffcc00;
+  color: #e0e0e0;
 }
 
 /* Estilo para mensajes de error */
 .error-message {
-    color: #ff3333;
+  color: #ff6666;
 }
 
 /* Estilo para mensajes de éxito */
 .success-message {
-    color: #29cc29;
+  color: #a0ffa0;
+}
+
+/* Estilo para listas numeradas */
+.numbered-list {
+  margin-left: 15px;
+}
+
+.numbered-item {
+  display: flex;
+  margin-bottom: 3px;
+}
+
+.number {
+  margin-right: 8px;
+  min-width: 12px;
 }
 
 /* Scrollbar personalizado */
 ::-webkit-scrollbar {
-    width: 8px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.3);
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #33ff33;
-    border-radius: 4px;
+  background: #444;
+  border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #29cc29;
+  background: #555;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .laptop-screen {
+    width: 50%;
+    height: 35%;
+  }
+
+  .terminal-content {
+    font-size: 11px;
+  }
+
+  .option-box {
+    font-size: 10px;
+    height: 32px;
+  }
+}
+
+@media (max-width: 768px) {
+  .laptop-screen {
+    width: 70%;
+    height: 45%;
+    transform: none;
+  }
+
+  .terminal-options {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  }
 }
