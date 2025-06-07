@@ -229,7 +229,7 @@ let j = 1;
 
 async function processSelectedOption() {
     try {
-        const response = await fetch(`/.netlify/functions/in_the_begining_were_the_words?i=${i,j}`); //CAMBIAR EL LINK CUANDO HAGA LO DE NETLIFY
+        const response = await fetch(`/.netlify/functions/NAME?i=${i,j}`); //CAMBIAR EL LINK CUANDO HAGA LO DE NETLIFY
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
