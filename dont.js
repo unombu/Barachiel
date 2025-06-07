@@ -221,12 +221,6 @@ function showOptions(options) {
   })
 }
 processSelectedOption();
-
-})
-
-let i = 1;
-let j = 1;
-
 async function processSelectedOption() {
     try {
         const response = await fetch(`/.netlify/functions/NAME?i=${i,j}`); //CAMBIAR EL LINK CUANDO HAGA LO DE NETLIFY
@@ -250,3 +244,8 @@ async function processSelectedOption() {
         { text: "No.", action: () => handleNoResponse() },
     ])
 }
+})
+
+let i = 1;
+let j = 1;
+
