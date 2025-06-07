@@ -1,6 +1,7 @@
 let i = 1;
 let j = 1;
 document.addEventListener("DOMContentLoaded", () => {
+  console.log('volviendo a cargar el DOM')
   const outputElement = document.getElementById("output")
   const inputElement = document.getElementById("terminal-input")
   const optionsContainer = document.getElementById("options-container")
@@ -225,7 +226,7 @@ function showOptions(options) {
 processSelectedOption();
 async function processSelectedOption() {
     try {
-        const response = await fetch(`/.netlify/functions/NAME?i=${i}&j=${j}`); //CAMBIAR EL LINK CUANDO HAGA LO DE NETLIFY
+        const response = await fetch(`https://barachiel.netlify.app/.netlify/functions/NAME?i=${i}&j=${j}`); //CAMBIAR EL LINK CUANDO HAGA LO DE NETLIFY
         console.log(response);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
