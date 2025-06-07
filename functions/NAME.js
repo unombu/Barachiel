@@ -279,8 +279,8 @@ const options = {
 };
 
 exports.handler = function(event, context) {
-    let optionID = event.queryStringParameters.i;
-    let lastOptionId = event.queryStringParameters.j;
+    let optionID = parseInt(event.queryStringParameters.i);
+    let lastOptionId = parseInt(event.queryStringParameters.j);
     
     if ( anticheats(lastOptionId, optionID) ) {
         let selectedOption = options[optionID];
