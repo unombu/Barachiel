@@ -153,7 +153,7 @@ inputElement.addEventListener("keydown", (event) => {
     inputElement.focus()
   })
 
-  // Función para escribir texto con efecto de delay
+// Función para escribir texto con efecto de delay
 function typeText(text, className = "") {
   return new Promise((resolve) => {
     isTyping = true
@@ -227,14 +227,14 @@ async function processSelectedOption() {
     try {
         const response = await fetch(`/.netlify/functions/NAME?i=${i}&j=${j}`); //CAMBIAR EL LINK CUANDO HAGA LO DE NETLIFY
         console.log(response);
-        // if (!response.ok) {
-        //     throw new Error(`HTTP error! status: ${response.status}`);
-        // }
-        // const data = await response.json();
-        // res = data.response;
-        // opciones = data.opciones;
-        // console.log('Respuesta:', res);
-        // console.log('Opciones:', opciones);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        res = data.response;
+        opciones = data.opciones;
+        console.log('Respuesta:', res);
+        console.log('Opciones:', opciones);
 
     } catch (error) {
         console.error('Problemas de backend lpm', error);
