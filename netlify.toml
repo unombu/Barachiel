@@ -1,3 +1,0 @@
-[build]
-  publish = "." # Directorio donde están tus archivos estáticos (HTML, CSS, JS). Generalmente es la raíz del repo.
-  functions = "functions" 
