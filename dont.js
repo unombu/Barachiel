@@ -21,8 +21,11 @@ const responses = {
     },
     2: {
         id: 2, 
-        action: "type",
-        response: ['MISION 1 ENCRIPTADA', 'MISION 2 ENCRIPTADA'] , 
+        action: "document",
+        response: ['FALL . . . You are alone child. There is only darkness for you and only death for your people. This ancients are just the beginning. I will command a terrible army, we will sail to a billion worlds. We will sail until every light has been extinguished. You are strong child, but I am beyond strength. I am the end, and I have come for you, [redacted].', 
+          `Great embodiment of chaos, HEAR ME. For ages untold I studied your ways devoting my existence to you. I strove to be your vessel on the physical plane to build mountains of bodies in your honour, to extinguish all life and in my universe this I achieved… But it gave me no satisfaction, in succeeding I lost all purpose.
+          WHY? WHY MUST THIS BE? HEAR ME IAN.
+          no…no. NO! ANSWER ME. WHAT MORE COULD I HAVE DONE? WHAT DO YOU WANT FROM ME NOW?`] , 
         options: [0,1,2,3]
     },
     3: {
