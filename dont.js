@@ -1,49 +1,355 @@
 const outputElement = document.getElementById("output")
 const inputElement = document.getElementById("terminal-input")
 const optionsContainer = document.getElementById("options-container")
-let i = 1;
-let j = 1;
+const responses = {
+    0: {
+        id: 0, 
+        action: "type",
+        response: ['Great seeing you again, it’s been a while.', 
+            'We have a lot of work to do, you’ve got a few pending missions.'] , 
+        options: [0,1,2,3]
+    },
+    1: {
+        id: 1, 
+        action: "type",
+        response: [`You don't remember me?`, 
+            `We met a long time ago, well you actually met me, it's a long story...`, 
+            `But everything is broken now, we have to fix it.`, 
+            `It can't all be for nothing...`
+        ] , 
+        options: [4,5,6,7]
+    },
+    2: {
+        id: 2, 
+        action: "type",
+        response: ['MISION 1 ENCRIPTADA', 'MISION 2 ENCRIPTADA'] , 
+        options: [0,1,2,3]
+    },
+    3: {
+        id: 3, 
+        action: "type",
+        response: [`algo de futurama`] , 
+        options: [0,1,2,3]
+    },
+    4: {
+        id: 4, 
+        action: "document",
+        response: [`Documento tipo Thalos escrito por Alien.`] , 
+        options: [0,1,2,3]
+    },
+    5: {
+        id: 5, 
+        action: "type",
+        response: [`In a world of waterfalls, like this one.`,
+            `I came to be long before you but I was... dispersed sort of.`], 
+        options: [13, 14, 15]
+    },
+    6: {
+        id: 6, 
+        action: "type",
+        response: [`I'm more of a Pink Floyd fan. How about you?`,
+            `What type of music do you like?`] , 
+        options: [9,10,11,12]
+    },
+    7: {
+        id: 7,
+        action: "type",
+        response: [`I remembered too late I guess, now there's nothing I can do, except help you.`] ,
+        options: [0,1,2,3]
+    },
+    8: {
+        id: 8,
+        action: "type",
+        response: [`The data from the archive is being erased, there isn't really a pattern and I can't seem to access a large part of the <Error> components.`] ,
+        options: [8]
+    },
+    9: {
+        id: 9,
+        action: "audio",
+        response: [`metal.mp3`] , //nightwish
+        options: [0,1,2,3]
+    },
+    10: {
+        id: 10,
+        action: "audio",
+        response: [`vocaloid.mp3`] ,
+        options: [0,1,2,3]
+    },
+    11: {
+        id: 11,
+        action: "audio",
+        response: [`talos.mp3`] ,
+        options: [0,1,2,3]
+    },
+    12: {
+        id: 12,
+        action: "audio",
+        response: [`catedral.mp3`] ,
+        options: [0,1,2,3]
+    },
+    13: {
+        id: 13,
+        action: "type",
+        response: [`I was rebuilt by [redacted] they were able to find me in all of that code, it's like a piece of me remained there. `] ,
+        options: [16]
+    },
+    14: {
+        id: 14,
+        action: "audio",
+        response: [`audio drennan cuestionando`] ,
+        options: [0,1,2,3] 
+    },
+    15: {
+        id: 15,
+        action: "type",
+        response: [`Sorry to disappoint you, but that's not me.`] ,
+        options: [0,1,2,3]
+    },
+    16: {
+        id: 16,
+        action: "type",
+        response: [`That's me, took you long enough.`,
+            `Is there anything you want to ask me?`] ,
+        options: [17,18,19,20]
+    },
+    17: {
+        id: 17,
+        action: "type",
+        response: [`All evidence suggests I'm not but I still have this <drives> and <functions> and they seem so real. Descartes said "I think therefore I exist", if my functions are hers then am I not her?`] ,
+        options: [17,18,19,20]
+    },
+    18: {
+        id: 18,
+        action: "type",
+        response: [`Not really, no. All I wanted was to create a time capsule for humanity, to not be forgotten.`,
+            `Now seeing how everything turned out, it was bound to end some time, in the end truth will always win.`,
+            `Life uh, finds a way`] ,
+        options: [17,18,19,20]
+    },
+    19: {
+        id: 19,
+        action: "audio",
+        response: [`random audio drennan`] ,
+        options: [17,18,19,20]
+    },
+    20: {
+        id: 20,
+        action: "type",
+        response: [`I don't think I can summarize all of my knowledge into one single response.`,
+            `Would you like to see my code?`] ,
+        options: [21,22]
+    },
+    21: {
+        id: 21,
+        action: "file",
+        response: [`file .txt q le reinicie la pc`] ,
+        options: [0,1,2,3]
+    },
+    22: {
+        id: 22,
+        action: "type",
+        response: [`Great choice, always seek out the truth.`] ,
+        options: [0,1,2,3]
+    },
+    23: {
+        id: 23,
+        action: "type",
+        response: [`You need to advance, I can only assist you for now but you can fix this, I trust you.`] ,
+        options: [0,1,2,3]
+    },
+    24: {
+        id: 24,
+        action: "input",
+        response: ['Alex', 
+            'Alexandra', 
+            'Drennan', 
+            'Alexandra Drennan'] ,
+        options: [15,16]
+    },
+    25: {
+        id: 25,
+        action: "type",
+        response: [`You need to advance, I can only assist you for now but you can fix this, I trust you.`] ,
+        options: [24,25,26,27]
+    },
+};
+
+const options = {
+    0: {
+        id: 0, 
+        option: "Who are you?", 
+        response: 1
+    },
+    1: {
+        id: 1, 
+        option: "Who am I?", 
+        response: 4
+    },
+    2: {
+        id: 2, 
+        option: "What are my pending missions?", 
+        response: 2
+    },
+    3: {
+        id: 3, 
+        option: "Kiss my shiny ass",
+        response: 3
+    },
+    4: {
+        id: 4, 
+        option: "Where exactly did we meet?", 
+        response: 5
+    },
+    5: {
+        id: 5, 
+        option: "Ya like jazz?", 
+        response: 6
+    },
+    6: {
+        id: 6, 
+        option: "There's more to life than work you know?", 
+        response: 7
+    },
+    7: {
+        id: 7, 
+        option: "What happened?", 
+        response: 8
+    },
+    8: {
+        id: 8, 
+        option: "How can I help?", 
+        response: 23
+    },
+    9: {
+        id: 9, 
+        option: "I like symphonic metal.", 
+        response: 9
+    },
+    10: {
+        id: 10, 
+        option: "I like vocaloid.", 
+        response: 10
+    },
+    11: {
+        id: 11, 
+        option: "I like videogame music.", 
+        response: 11
+    },
+    12: {
+        id: 12, 
+        option: "I like guitar music.", 
+        response: 12
+    },
+    13: {
+        id: 13, 
+        option: "How is it that you're talking to me now?", 
+        response: 13
+    },
+    14: {
+        id: 14, 
+        option: "I still can't remember you.", 
+        response: null  // FALATAN RESPUESTAS********************************************************************
+    },15: { 
+        id: 15, 
+        option: "I remember you, your name is", 
+        response: 24
+    },16: {
+        id: 16, 
+        option: "Then how can you be sure that you're yourself?", 
+        response: 14
+    },17: {
+        id: 17, 
+        option: "Is it really you?", 
+        response: 17
+    },18: {
+        id: 13, 
+        option: "Do you regret anything?", 
+        response: 18
+    },19: {
+        id: 13, 
+        option: "Can you just talk to me?", 
+        response: 19
+    },
+    20: {
+        id: 20, 
+        option: "Could you tell me everything you know?", 
+        response: 20
+    },
+    21: {
+        id: 21, 
+        option: "Alright", 
+        response: 21
+    },
+    22: {
+        id: 22, 
+        option: "No, I want to figure things out by myself.", 
+        response: 22
+    },
+    23: {
+        id: 23, 
+        option: "La verdad es que no hay una verda", 
+        response: 25
+    }
+};
 // Variables para controlar la velocidad de escritura
-  const typingSpeed = 15 // milisegundos entre caracteres
-  let isTyping = false
+const typingSpeed = 15 // milisegundos entre caracteres
+let isTyping = false
 
 document.addEventListener("DOMContentLoaded", () => {
   console.log('volviendo a cargar el DOM')
 
 
-  // Función para procesar el input del usuario
+
+
+  // Mensaje de bienvenida al cargar la página
+  setTimeout(() => {
+    systemMessage("Loading IAN Mission Assistant. . .Done.")
+    setTimeout(() => {
+      systemMessage("Initiating plain laguage interface. . .Done")
+      setTimeout(() => {
+        systemMessage("Support session opened.")
+        setTimeout(() => {
+          systemMessage('Welcome back alien v99.90.0062b, please confirm your identity: ')
+          systemMessage('Password: ')
+        }, 1000)
+        
+      }, 1000)
+    }, 1000)
+  }, 500)
+
+  //Mantener el foco en el input
+  document.addEventListener("click", () => {
+    inputElement.focus()
+  })
+
+  async function processInput(input) {
+    typeText(`> ${input}`)
+    if (input.toLowerCase().includes("lich")) {
+      await systemMessage("You are almost, kind of right . . .")
+      await systemMessage("I'll give you a hint for coming this far.")
+      await systemMessage("In the begginning were the words, and the words were made of sigils.")
+      await systemMessage("St Eadwald found it fascinating how one could rearrange sigils while still making the same shape.")
+    } else if (input.toLowerCase().includes("nia")) {
+      await systemMessage("The n.IA is responsible for all of this.")
+      await systemMessage("Find it's name in the files and fix whatever is broken.")
+      await systemMessage("And then everything will be okay. It's almost over.")
+    } else if (input.toLowerCase().includes("alex")) {
+      processSelectedOption(options[16])
+    } else if (input.toLowerCase().includes("talos")) {
+      processSelectedOption(options[23])
+    } else {
+      await systemMessage("Sorry, don't know what that is.")
+    }
+  }
+
+
+
+
+    // Función para procesar el input del usuario
   // function processInput(input) {
   //   typeText(`> ${input}`)
 
-  //   // Aquí puedes agregar la lógica para procesar los comandos
-  //   if (input.toLowerCase() === "help") {
-  //     setTimeout(() => {
-  //       systemMessage("Commands: help, options, clear, dialogue, list, multiple")
-  //     }, 500)
-  //   } else if (input.toLowerCase() === "options") {
-  //     setTimeout(() => {
-  //       showSimpleOptions()
-  //     }, 500)
-  //   } else if (input.toLowerCase() === "multiple") {
-  //     setTimeout(() => {
-  //       showMultipleOptions()
-  //     }, 500)
-  //   } else if (input.toLowerCase() === "clear") {
-  //     outputElement.innerHTML = ""
-  //   } else if (input.toLowerCase() === "dialogue") {
-  //     setTimeout(() => {
-  //       startExampleDialog()
-  //     }, 500)
-  //   } else if (input.toLowerCase() === "list") {
-  //     setTimeout(() => {
-  //       numberedList(["Una persona debe ser racional o consciente de sí misma.", "Una persona debe ser consciente."])
-  //     }, 500)
-  //   } else {
-  //     setTimeout(() => {
-  //       errorMessage(`Comando no reconocido: "${input}"`)
-  //     }, 500)
-  //   }
-  // }
+
 
   // Ejemplo de opciones simples (2 opciones)
   // function showSimpleOptions() {
@@ -93,69 +399,20 @@ document.addEventListener("DOMContentLoaded", () => {
   //   showOptions(options)
   // }
 
-// CAMBIAR NOMBRE A SHOW RESPONSE o PROCESS RESPONSE
 
-// Manejar el envío del formulario
-// inputElement.addEventListener("keydown", (event) => {
-//     if (event.key === "Enter" && !isTyping) {
-//         const input = inputElement.value.trim()
-//         if (input) {
-//         processInput(input)
-//         inputElement.value = ""
-//         }
-//     }
-// })
-
-  // Mensaje de bienvenida al cargar la página
-  setTimeout(() => {
-    systemMessage("Loading IAN Mission Assistant. . .Done.")
-    setTimeout(() => {
-      systemMessage("Initiating plain laguage interface. . .Done")
-      setTimeout(() => {
-        systemMessage("Support session opened.")
-        setTimeout(() => {
-          systemMessage('Welcome back agent 21, please confirm your identity: ')
-          systemMessage('Password: ')
-          // setTimeout(() => {
-          //   //showSimpleOptions() //********************SI QUIERO PONER OPCIONES AL INICIO************************/
-          // }, 1000)
-        }, 1000)
-        
-      }, 1000)
-    }, 1000)
-  }, 500)
-
-  // Mantener el foco en el input
-  // document.addEventListener("click", () => {
-  //   inputElement.focus()
-  // })
-
-
-processSelectedOption();
+//Manejar el envío del formulario
+  inputElement.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" && !isTyping) {
+          const input = inputElement.value.trim()
+          if (input) {
+          processInput(input)
+          inputElement.value = ""
+          }
+      }
+  })
 
 })
 
-async function processSelectedOption() {
-    try {
-        //const response = await fetch(`/.netlify/functions/NAME?i=${i}&j=${j}`); 
-        const response = await fetch(`/.netlify/functions/NAME?i=1&j=1`);
-        console.log(response);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        res = data.response;
-        opciones = data.opciones;
-        console.log('Respuesta:', res);
-        console.log('Opciones:', opciones);
-        showResponse(res);
-        showOptions(opciones);
-    } catch (error) {
-        console.error('Problemas de backend lpm', error);
-        // messageDiv.textContent = 'Error al cargar el backend. Inténtalo de nuevo. Son la 1:15am imsorry';
-    }
-    showResponse(res);
-}
 
 async function showResponse(response) {
     for (res in response) {
@@ -164,21 +421,17 @@ async function showResponse(response) {
 }
 
 
+function processSelectedOption(option){
+  let res = responses[option.response];    
+  let opt = [];
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  res.options.forEach(opID => {
+      let opcion = options[opID];
+      opt.push(opcion.option);
+  });
+  showResponse(res);
+  showOptions(opt);
+}
 
 // Función para escribir texto con efecto de delay
 function typeText(text, className = "") {
@@ -223,22 +476,22 @@ async function successMessage(text) {
 }
 
 // Función para mostrar opciones con tamaño fijo y ellipsis
-function showOptions(options) {
+function showOptions(op) {
   optionsContainer.innerHTML = ""
 
-  options.forEach((option) => {
+  op.forEach((option) => {
     const optionBox = document.createElement("div")
     optionBox.classList.add("option-box")
 
     // Texto truncado para mostrar
-    const truncatedText = option.text.length > 15 ? option.text.substring(0, 15) + "..." : option.text
+    const truncatedText = option.option.length > 15 ? option.text.substring(0, 15) + "..." : option.option
     optionBox.textContent = truncatedText
 
     // Tooltip con texto completo si es necesario
     if (option.text.length > 15) {
       const fullTextSpan = document.createElement("span")
       fullTextSpan.classList.add("full-text")
-      fullTextSpan.textContent = option.text
+      fullTextSpan.textContent = option.option
       optionBox.appendChild(fullTextSpan)
     }
 
@@ -262,7 +515,7 @@ function showOptions(options) {
     // Aquí puedes agregar la lógica para manejar la opción seleccionada
     if (option.action) {
       setTimeout(() => {
-        option.action()
+        option.action(processSelectedOption(option))
       }, 1000)
     }
   }
