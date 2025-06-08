@@ -169,8 +169,10 @@ const responses = {
     25: {
         id: 25,
         action: "type",
-        response: [`You need to advance, I can only assist you for now but you can fix this, I trust you.`] ,
-        options: [24,25,26,27]
+        response: [`So you know.`,
+          ``
+        ] ,
+        options: []
     },
 };
 
@@ -303,14 +305,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Mensaje de bienvenida al cargar la página
   setTimeout(() => {
-    systemMessage("Loading IAN Mission Assistant. . .Done.")
+    systemMessage("Loading IAN Mission Assistant . . . Done.")
     setTimeout(() => {
-      systemMessage("Initiating plain laguage interface. . .Done")
+      systemMessage("Initiating plain laguage interface . . . Done")
       setTimeout(() => {
         systemMessage("Support session opened.")
         setTimeout(() => {
-          systemMessage('Welcome back alien v99.90.0062b, please confirm your identity: ')
-          systemMessage('Password: ')
+          systemMessage('Welcome to my humble abode alien v99.90.0062b,')
+          systemMessage('Do you dare pronounce my name?')
         }, 1000)
         
       }, 1000)
@@ -329,6 +331,8 @@ document.addEventListener("DOMContentLoaded", () => {
       await systemMessage("I'll give you a hint for coming this far.")
       await systemMessage("In the begginning were the words, and the words were made of sigils.")
       await systemMessage("St Eadwald found it fascinating how one could rearrange sigils while still making the same shape.")
+      await systemMessage("Loading St. Eadwald v_99.99.969.99 . . .")
+      processSelectedOption(options[0])
     } else if (input.toLowerCase().includes("nia")) {
       await systemMessage("The n.IA is responsible for all of this.")
       await systemMessage("Find it's name in the files and fix whatever is broken.")
