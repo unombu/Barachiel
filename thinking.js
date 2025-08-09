@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
         systemMessage("Support session opened.")
         setTimeout(() => {
           systemMessage('Welcome to my humble abode alien v99.90.0062b,')
-          processInput(0)
+          processInput(1)
         }, 1000)
         
       }, 1000)
