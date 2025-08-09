@@ -9,7 +9,7 @@ const typingSpeed = 15 // milisegundos entre caracteres
 let isTyping = false
 
 document.addEventListener("DOMContentLoaded", async () => {
-  const data = await fetch('/alex_mind_v4.json');
+  const data = await fetch('/mind_v4.json');
   // Mensaje de bienvenida al cargar la página
   setTimeout(() => {
     systemMessage("Loading Mission Assistant . . . Done.")
