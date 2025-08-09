@@ -1,9 +1,11 @@
+// functions/NAME.js
 const data = require('./alex_mente_v4.json');
 
 exports.handler = function(event, context) {
+    // Obtén el 'id' de los parámetros de la URL.
     const id = event.queryStringParameters.i;
 
-    // Verificar si el ID existe en el objeto 'responses'
+    // 1. Verifica si el ID existe como clave en el objeto 'responses' de tu JSON.
     if (!data.responses[id]) {
         return {
             statusCode: 404,
@@ -11,22 +13,23 @@ exports.handler = function(event, context) {
         };
     }
     
-    // Obtener el objeto de respuesta por su ID
+    // Obtén el objeto de respuesta completo
     const currentResponse = data.responses[id];
     let options = [];
 
-    // Iterar sobre los IDs que están en la propiedad 'next'
-    // y usar esos IDs para buscar los objetos de opciones correspondientes
+    // 2. Itera sobre los IDs en la propiedad 'next' (no 'options').
+    // Usa un bucle `for...of` para obtener el valor de cada ID.
     if (currentResponse.next && Array.isArray(currentResponse.next)) {
         for (const opcionId of currentResponse.next) {
-            // Suponiendo que 'opciones' es un objeto mapeado por IDs, como en tu ejemplo anterior
+            // 3. Usa el ID de la opción para buscar el objeto de opción en el JSON
+            // y agrégalo al array de 'options'.
             if (data.opciones[opcionId]) {
                 options.push(data.opciones[opcionId]);
             }
         }
     }
     
-    // Construir el objeto final que se enviará al frontend
+    // Construye el objeto que se enviará al frontend.
     const object = {
         response: currentResponse,
         options: options
@@ -40,6 +43,7 @@ exports.handler = function(event, context) {
             "Access-Control-Allow-Methods": "GET",
             "Access-Control-Allow-Headers": "Content-Type"
         },
+        // 4. Envía el objeto directamente, sin anidarlo en otra propiedad.
         body: JSON.stringify(object)
     };
 };
