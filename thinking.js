@@ -40,7 +40,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         const data = await response.json();
         console.log(data);
-        targetWord = data.word;
+        repsonse = data.response;
+        systemMessage(response.contenido);
         console.log('Palabra del Wordle cargada (oculta):', correctWord);
 
     } catch (error) {
