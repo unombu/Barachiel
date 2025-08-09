@@ -9,7 +9,7 @@ const typingSpeed = 15 // milisegundos entre caracteres
 let isTyping = false
 
 document.addEventListener("DOMContentLoaded", async () => {
-  const data = await fetch('/alex_mente_v4.json');
+  const data = await fetch('/alex_mind_v4.json');
   // Mensaje de bienvenida al cargar la página
   setTimeout(() => {
     systemMessage("Loading Mission Assistant . . . Done.")
@@ -25,28 +25,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       }, 1000)
     }, 1000)
   }, 500)
-
-  //TESTING
-
-  fetch(`/.netlify/functions/NAME?i=1`)
-  .then(response => {
-    console.log(response);
-    if (!response.ok) {
-      throw new Error('No se pudo obtener la conversación');
-    }
-    return response.json();
-  })
-  .then(data => {
-    // 'data' solo contendrá el objeto JSON que pediste, no todo el archivo
-    console.log(data);
-    // Usa los datos en tu frontend
-  })
-  .catch(error => console.error('Error:', error));
-
-  //Mantener el foco en el input
-  document.addEventListener("click", () => {
-    inputElement.focus()
-  })
 
   async function processInput(id) {
 
