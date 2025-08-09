@@ -34,6 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
   async function processInput(id) {
     try {
         const response = await fetch(`/.netlify/functions/NAME?i=${id}`); 
+        console.log(response)
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
