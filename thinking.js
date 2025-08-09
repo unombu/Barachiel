@@ -1,6 +1,7 @@
 const outputElement = document.getElementById("output")
 const inputElement = document.getElementById("terminal-input")
 const optionsContainer = document.getElementById("options-container")
+const data = require('./mind_v4.json');
 
 var currentOptions = [];
 
@@ -32,21 +33,10 @@ document.addEventListener("DOMContentLoaded", () => {
   })
 
   async function processInput(id) {
-    try {
-        const response = await fetch(`/.netlify/functions/NAME?i=${id}`); 
-        console.log(response)
-        // if (!response.ok) {
-        //     throw new Error(`HTTP error! status: ${response.status}`);
-        // }
-        const data = await response.json();
-        console.log(data);
-        currentResponse  = data.response;
-        systemMessage(currentResponse.contenido);
-        console.log('Palabra del Wordle cargada (oculta):', correctWord);
 
-    } catch (error) {
-        console.error('Error al obtener el objeto:', error);
-    }
+    currentResponse  = data.responses[id];
+    systemMessage(currentResponse.contenido);
+
   }
 
   //Manejar el envío del formulario
@@ -65,9 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function showResponse(response) {
   console.log(response)
-  for (const res of response) {
-    await systemMessage(res);
-  }
+  await systemMessage(res);
 }
 
 function playAudio(res) {
@@ -76,21 +64,27 @@ function playAudio(res) {
 }
 
 async function processSelectedOption(option){
-  let res = responses[option.response];
+  let res = option.next;
+  if(res.length == 0) {
+    errorMessage("falto algo aca")
+  }
+  respuesta = data.responses[res[0]];
   let opt = [];
 
-  res.options.forEach(opID => {
+  respuesta.next.forEach(opID => {
       let opcion = options[opID];
       opt.push(opcion);
   });
-  if(res.action == "audio"){
-    playAudio(res);
-  } else if (res.action == "input") {
+
+  if(respuesta.action == "AUDIO"){
+    playAudio(respuesta);
+  } else if (respuesta.action == "NULL") {
     processInput();
   } else {
-    await showResponse(res.response);
+    await showResponse(respuesta.response);
   }
-  await showResponse(res.response);
+
+  await showResponse(respuesta.response);
   showOptions(opt);
   console.log(opt);
 }
