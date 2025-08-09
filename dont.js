@@ -2,6 +2,40 @@ const outputElement = document.getElementById("output")
 const inputElement = document.getElementById("terminal-input")
 const optionsContainer = document.getElementById("options-container")
 const responses = {
+  101: {
+    id: 101,
+    action: NULL,
+    response: ["Oh, someone's here.",
+    "It's been a while since I had someone to talk to. ",
+    "Who are you?"],
+    options: [101,102,103,104]
+  },
+  102: {
+    id: 102,
+    action: VERIFY,
+    response: ["It really is you, you´ve aged...",
+      "Almost forgot, I need to ask you for a keyword to confirm your identity"],
+    options : REMOVE,
+    try : [
+      "Don´t worry, you can try again",
+      "Nope!",
+      "Is it really you?",
+      "Wow this is taking you a while ain´t it?",
+      "I´m gonna take a nap and let the algorythm do it´s thing...",
+      "You have exceeded the ammount of attempts. System locking out."
+    ]
+  },
+  103: {
+    id: 103,
+    action: NULL,
+    response: ["Oh, someone's here.",
+    "It's been a while since I had someone to talk to. ",
+    "Who are you?"],
+    options: [101,102,103,104]
+  },
+
+
+
     0: {
         id: 0, 
         action: "type",
@@ -21,7 +55,7 @@ const responses = {
     },
     2: {
         id: 2, 
-        action: "document",
+        action: "type",
         response: ['FALL . . . You are alone child. There is only darkness for you and only death for your people. This ancients are just the beginning. I will command a terrible army, we will sail to a billion worlds. We will sail until every light has been extinguished. You are strong child, but I am beyond strength. I am the end, and I have come for you, [redacted].', 
           `Great embodiment of chaos, HEAR ME. For ages untold I studied your ways devoting my existence to you. I strove to be your vessel on the physical plane to build mountains of bodies in your honour, to extinguish all life and in my universe this I achieved… But it gave me no satisfaction, in succeeding I lost all purpose.
           WHY? WHY MUST THIS BE? HEAR ME IAN.
@@ -36,7 +70,7 @@ const responses = {
     },
     4: {
         id: 4, 
-        action: "document",
+        action: "type",
         response: [`Documento tipo Thalos escrito por Alien.`] , 
         options: [0,1,2,3]
     },
@@ -144,7 +178,7 @@ const responses = {
     },
     21: {
         id: 21,
-        action: "file",
+        action: "type",
         response: [`file .txt q le reinicie la pc`] ,
         options: [0,1,2,3]
     },
@@ -301,10 +335,6 @@ const typingSpeed = 15 // milisegundos entre caracteres
 let isTyping = false
 
 document.addEventListener("DOMContentLoaded", () => {
-  console.log('volviendo a cargar el DOM')
-
-
-
 
   // Mensaje de bienvenida al cargar la página
   setTimeout(() => {
@@ -315,7 +345,9 @@ document.addEventListener("DOMContentLoaded", () => {
         systemMessage("Support session opened.")
         setTimeout(() => {
           systemMessage('Welcome to my humble abode alien v99.90.0062b,')
-          systemMessage('Do you dare pronounce my name?')
+          setTimeout(() => {
+            systemMessage('Password : ')
+          }, 1000)
         }, 1000)
         
       }, 1000)
@@ -349,65 +381,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-
-
-
-    // Función para procesar el input del usuario
-  // function processInput(input) {
-  //   typeText(`> ${input}`)
-
-
-
-  // Ejemplo de opciones simples (2 opciones)
-  // function showSimpleOptions() {
-  //   const options = [
-  //     {
-  //       text: "Sí.",
-  //       action: () => systemMessage('Has elegido "Sí".'),
-  //     },
-  //     {
-  //       text: "No.",
-  //       action: () => systemMessage('Has elegido "No".'),
-  //     },
-  //   ]
-
-  //   showOptions(options)
-  // }
-
-  // Ejemplo de múltiples opciones (6 opciones)
-  // function showMultipleOptions() {
-  //   const options = [
-  //     {
-  //       text: "AT_feedback.eml",
-  //       action: () => systemMessage("Abriendo archivo AT_feedback.eml..."),
-  //     },
-  //     {
-  //       text: "team_leads.eml",
-  //       action: () => systemMessage("Abriendo archivo team_leads.eml..."),
-  //     },
-  //     {
-  //       text: "straton_of_stageira.wiki",
-  //       action: () => systemMessage("Abriendo archivo straton_of_stageira.wiki..."),
-  //     },
-  //     {
-  //       text: "library_session.log",
-  //       action: () => systemMessage("Abriendo archivo library_session.log..."),
-  //     },
-  //     {
-  //       text: "distributed_resources.dat",
-  //       action: () => systemMessage("Abriendo archivo distributed_resources.dat..."),
-  //     },
-  //     {
-  //       text: "exit",
-  //       action: () => errorMessage("Cerrando sesión..."),
-  //     },
-  //   ]
-
-  //   showOptions(options)
-  // }
-
-
-//Manejar el envío del formulario
+  //Manejar el envío del formulario
   inputElement.addEventListener("keydown", (event) => {
       if (event.key === "Enter" && !isTyping) {
           const input = inputElement.value.trim()
@@ -422,22 +396,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 async function showResponse(response) {
-    for (res in response) {
-        await systemMessage(res);
-    }
+  console.log(response)
+  for (const res of response) {
+    await systemMessage(res);
+  }
 }
 
+function playAudio(res) {
+  let audio = new Audio(res.response);
+  audio.play();
+}
 
-function processSelectedOption(option){
-  let res = responses[option.response];    
+async function processSelectedOption(option){
+  let res = responses[option.response];
   let opt = [];
 
   res.options.forEach(opID => {
       let opcion = options[opID];
-      opt.push(opcion.option);
+      opt.push(opcion);
   });
-  showResponse(res);
+  if(res.action == "audio"){
+    playAudio(res);
+  } else if (res.action == "input") {
+    processInput();
+  } else {
+    await showResponse(res.response);
+  }
+  await showResponse(res.response);
   showOptions(opt);
+  console.log(opt);
 }
 
 // Función para escribir texto con efecto de delay
@@ -482,48 +469,48 @@ async function successMessage(text) {
   await typeText(text, "success-message")
 }
 
+async function userMessage(text) {
+  await typeText(`> ${text}`, "user-message")
+}
+
 // Función para mostrar opciones con tamaño fijo y ellipsis
 function showOptions(op) {
-  optionsContainer.innerHTML = ""
+  optionsContainer.innerHTML = "";
+  console.log(op);
 
-  op.forEach((option) => {
-    const optionBox = document.createElement("div")
-    optionBox.classList.add("option-box")
+  op.forEach((optionData) => { // Renamed 'option' to 'optionData' for clarity
+    const optionBox = document.createElement("div");
+    optionBox.classList.add("option-box");
 
-    // Texto truncado para mostrar
-    const truncatedText = option.option.length > 15 ? option.text.substring(0, 15) + "..." : option.option
-    optionBox.textContent = truncatedText
+    // Text to display comes from optionData.option
+//    const truncatedText = optionData.length > 15 ? optionData.substring(0, 45) + "..." : optionData;
+    optionBox.textContent = optionData.option;
 
-    // Tooltip con texto completo si es necesario
-    if (option.text.length > 15) {
-      const fullTextSpan = document.createElement("span")
-      fullTextSpan.classList.add("full-text")
-      fullTextSpan.textContent = option.option
-      optionBox.appendChild(fullTextSpan)
+    // Tooltip with full text if necessary
+    if (optionData.option.length > 15) {
+      const fullTextSpan = document.createElement("span");
+      fullTextSpan.classList.add("full-text");
+      fullTextSpan.textContent = optionData.option; // Use optionData.option for full text
+      optionBox.appendChild(fullTextSpan);
     }
 
     optionBox.addEventListener("click", () => {
-      handleOptionSelect(option)
-    })
+      handleOptionSelect(optionData); // Pass the entire optionData object
+    });
 
-    optionsContainer.appendChild(optionBox)
-  })
+    optionsContainer.appendChild(optionBox);
+  });
 }
 
 // Función para manejar la selección de una opción
   function handleOptionSelect(option) {
-    typeText(`> ${option.text}`)
+    userMessage(option.option);
 
     // Limpiar opciones después de seleccionar
-    setTimeout(() => {
-      optionsContainer.innerHTML = ""
-    }, 500)
+    optionsContainer.innerHTML = ""
 
-    // Aquí puedes agregar la lógica para manejar la opción seleccionada
-    if (option.action) {
-      setTimeout(() => {
-        option.action(processSelectedOption(option))
-      }, 1000)
-    }
+    console.log(option)
+
+    processSelectedOption(option)
   }
 

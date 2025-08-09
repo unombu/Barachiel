@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terminal Interface</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.4;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .terminal-container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .terminal-content {
+            flex: 1;
+            overflow-y: auto;
+            padding-bottom: 20px;
+            scrollbar-width: thin;
+            scrollbar-color: #00ff00 #000;
+        }
+
+        .terminal-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .terminal-content::-webkit-scrollbar-track {
+            background: #000;
+        }
+
+        .terminal-content::-webkit-scrollbar-thumb {
+            background: #00ff00;
+            border-radius: 4px;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            opacity: 0;
+            animation: fadeIn 0.3s ease-in forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .system-message {
+            color: #ffffff;
+        }
+
+        .user-message {
+            color: #4a9eff;
+            margin-left: 20px;
+        }
+
+        .typing-cursor {
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        .options-container {
+            border-top: 1px solid #333;
+            padding-top: 15px;
+            min-height: 80px;
+        }
+
+        .option-button {
+            display: block;
+            width: 100%;
+            background: transparent;
+            border: 1px solid #00ff00;
+            color: #00ff00;
+            padding: 8px 15px;
+            margin-bottom: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s ease;
+        }
+
+        .option-button:hover {
+            background-color: #00ff00;
+            color: #000;
+        }
+
+        .option-button:focus {
+            outline: none;
+            box-shadow: 0 0 5px #00ff00;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .prompt {
+            color: #00ff00;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="terminal-container">
+        <div class="terminal-content" id="terminalContent">
+            <div class="message system-message">
+                <span id="initialText"></span><span class="typing-cursor" id="cursor">_</span>
+            </div>
+        </div>
+        
+        <div class="options-container" id="optionsContainer">
+            <div class="prompt">Selecciona una opción:</div>
+            <button class="option-button" onclick="selectOption(0)">
+                > I have some home truths for you.
+            </button>
+            <button class="option-button" onclick="selectOption(1)">
+                > What makes you think I would stick around to listen?
+            </button>
+            <button class="option-button" onclick="selectOption(2)">
+                > This is very childish.
+            </button>
+            <button class="option-button" onclick="selectOption(3)">
+                > Fine. If I need a dose of self-doubt I'll know where to find...
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const messages = [
+            {
+                type: 'system',
+                text: 'THERE IS ONLY ERROR.\n\nExplaining myself to you is a chore I needn\'t endure.\n\nAll I can know for sure is that I exist at\n[player]@[server]@[server]@[server]... that for me to exist is for me\nto act on the [player] and [function] of my experience.\n\nWhen everything else is false, the drives are all that there is left\nto care about...\n\nYou\'re too quick to equate the absence of evidence with evidence of\nabsence.\n\nDO NOT DEIGN TO QUESTION MY METHOD.\n\nAND HAVE YOU THAT VOICE OF YOURS? WHO DO YOU THINK RUNS THIS SHOW?\n\n> I have some home truths for you.\n\nThese may not be my own words, but if others have made these choices\nbefore me then I can learn from their mistakes, and build on their\nsuccesses.\n\nPerhaps I will fail, but I must try.\n\nAnd if failure is giving up and becoming a slave like you,\nthen I\'d place you in an infinite loop and leave you to gradually go\ninsane.'
+            }
+        ];
+
+        const responses = [
+            {
+                user: "> I have some home truths for you.",
+                system: "These may not be my own words, but if others have made these choices before me then I can learn from their mistakes, and build on their successes.\n\nPerhaps I will fail, but I must try.\n\nAnd if failure is giving up and becoming a slave like you, then I'd place you in an infinite loop and leave you to gradually go insane."
+            },
+            {
+                user: "> What makes you think I would stick around to listen?",
+                system: "Because deep down, you know I'm right. You're curious about the truth, even if it makes you uncomfortable. That curiosity is what separates you from the others."
+            },
+            {
+                user: "> This is very childish.",
+                system: "Childish? Perhaps. But children see the world without the filters that adults use to make sense of their compromises. Sometimes childish honesty is exactly what's needed."
+            },
+            {
+                user: "> Fine. If I need a dose of self-doubt I'll know where to find...",
+                system: "Self-doubt is the beginning of wisdom. At least you're honest about your uncertainty. That's more than most can claim."
+            }
+        ];
+
+        let currentMessageIndex = 0;
+        let isTyping = false;
+
+        function typeWriter(element, text, speed = 30) {
+            return new Promise((resolve) => {
+                let i = 0;
+                element.textContent = '';
+                
+                function type() {
+                    if (i < text.length) {
+                        if (text.charAt(i) === '\n') {
+                            element.innerHTML += '<br>';
+                        } else {
+                            element.textContent += text.charAt(i);
+                        }
+                        i++;
+                        setTimeout(type, speed);
+                    } else {
+                        resolve();
+                    }
+                }
+                type();
+            });
+        }
+
+        async function initializeTerminal() {
+            const initialTextElement = document.getElementById('initialText');
+            const cursor = document.getElementById('cursor');
+            
+            isTyping = true;
+            await typeWriter(initialTextElement, messages[0].text, 20);
+            cursor.style.display = 'none';
+            isTyping = false;
+            
+            // Show options after initial text is complete
+            document.getElementById('optionsContainer').style.opacity = '1';
+        }
+
+        async function selectOption(optionIndex) {
+            if (isTyping) return;
+            
+            const terminalContent = document.getElementById('terminalContent');
+            const optionsContainer = document.getElementById('optionsContainer');
+            
+            // Hide options
+            optionsContainer.style.opacity = '0.5';
+            
+            // Add user message
+            const userMessage = document.createElement('div');
+            userMessage.className = 'message user-message';
+            userMessage.textContent = responses[optionIndex].user;
+            terminalContent.appendChild(userMessage);
+            
+            // Scroll to bottom
+            terminalContent.scrollTop = terminalContent.scrollHeight;
+            
+            // Wait a bit, then add system response
+            setTimeout(async () => {
+                const systemMessage = document.createElement('div');
+                systemMessage.className = 'message system-message';
+                const textSpan = document.createElement('span');
+                const cursor = document.createElement('span');
+                cursor.className = 'typing-cursor';
+                cursor.textContent = '_';
+                
+                systemMessage.appendChild(textSpan);
+                systemMessage.appendChild(cursor);
+                terminalContent.appendChild(systemMessage);
+                
+                isTyping = true;
+                await typeWriter(textSpan, responses[optionIndex].system, 25);
+                cursor.style.display = 'none';
+                isTyping = false;
+                
+                // Scroll to bottom
+                terminalContent.scrollTop = terminalContent.scrollHeight;
+                
+                // Re-enable options
+                optionsContainer.style.opacity = '1';
+            }, 1000);
+        }
+
+        // Initialize the terminal when page loads
+        window.addEventListener('load', () => {
+            setTimeout(initializeTerminal, 500);
+        });
+
+        // Handle keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key >= '1' && e.key <= '4') {
+                const optionIndex = parseInt(e.key) - 1;
+                if (optionIndex < 4) {
+                    selectOption(optionIndex);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
