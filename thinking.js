@@ -35,9 +35,9 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
         const response = await fetch(`/.netlify/functions/NAME?i=${id}`); 
         console.log(response)
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
+        // if (!response.ok) {
+        //     throw new Error(`HTTP error! status: ${response.status}`);
+        // }
         const data = await response.json();
         console.log(data);
         repsonse = data.response;
