@@ -30,7 +30,16 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   async function processInput(id) {
     currentResponse = data.responses[id];
-    systemMessage(currentResponse.contenido);
+    await systemMessage(currentResponse.contenido);
+
+    options = [];
+    currentResponse.next.forEach(opID => {
+      options.push(data.opciones[opID])
+    });
+
+    console.log(options);
+
+    showOptions(options)
   }
 
   //Manejar el envío del formulario
@@ -139,13 +148,13 @@ function showOptions(op) {
 
     // Text to display comes from optionData.option
     //    const truncatedText = optionData.length > 15 ? optionData.substring(0, 45) + "..." : optionData;
-    optionBox.textContent = optionData.option;
+    optionBox.textContent = optionData.contenido;
 
     // Tooltip with full text if necessary
-    if (optionData.option.length > 15) {
+    if (optionData.contenido.length > 15) {
       const fullTextSpan = document.createElement("span");
       fullTextSpan.classList.add("full-text");
-      fullTextSpan.textContent = optionData.option; // Use optionData.option for full text
+      fullTextSpan.textContent = optionData.contenido; // Use optionData.option for full text
       optionBox.appendChild(fullTextSpan);
     }
 
