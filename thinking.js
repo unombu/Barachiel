@@ -4,12 +4,14 @@ const optionsContainer = document.getElementById("options-container")
 
 var currentOptions = [];
 
+const data = await fetch('/mind_v4.json');;
+
 // Variables para controlar la velocidad de escritura
 const typingSpeed = 15 // milisegundos entre caracteres
 let isTyping = false
 
 document.addEventListener("DOMContentLoaded", async () => {
-  const data = await fetch('/mind_v4.json');
+  console.log('cargando datos');
   console.log(data);
   // Mensaje de bienvenida al cargar la página
   setTimeout(() => {
