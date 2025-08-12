@@ -10,6 +10,7 @@ let isTyping = false
 
 document.addEventListener("DOMContentLoaded", async () => {
   const data = await fetch('/mind_v4.json');
+  console.log(data);
   // Mensaje de bienvenida al cargar la página
   setTimeout(() => {
     systemMessage("Loading Mission Assistant . . . Done.")
