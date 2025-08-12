@@ -7,7 +7,7 @@ var currentOptions = [];
 let data;
 
 // Variables para controlar la velocidad de escritura
-const typingSpeed = 15; // milisegundos entre caracteres
+const typingSpeed = 25; // milisegundos entre caracteres
 let isTyping = false;
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -16,16 +16,16 @@ document.addEventListener("DOMContentLoaded", async () => {
   console.log(data);
   // Mensaje de bienvenida al cargar la página
 
+  await sleep(1000)
+  await systemMessage("Loading Mission Assistant . . . Done.");
+  await sleep(1500)
+  await systemMessage("Initiating plain laguage interface . . . Done");
+  await sleep(1500)
+  await systemMessage("Support session opened.");
   await sleep(500)
-  systemMessage("Loading Mission Assistant . . . Done.");
-  await sleep(500)
-  systemMessage("Initiating plain laguage interface . . . Done");
-  await sleep(500)
-  systemMessage("Support session opened.");
-  await sleep(500)
-  systemMessage("Welcome to my humble abode alien v99.90.0062b,");
-  //processInput(1)
-
+  await systemMessage("Welcome to my humble abode alien v99.90.0062b,");
+  processInput(1)
+  console.log(data.responses["1"]);
 
   async function processInput(id) {
     currentResponse = data.responses[id];
