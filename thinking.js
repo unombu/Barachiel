@@ -12,6 +12,7 @@ let isTyping = false;
 
 document.addEventListener("DOMContentLoaded", async () => {
   data = await fetch("/mind_v4.json");
+  data = await data.json();
   console.log("cargando datos");
   console.log(data);
   // Mensaje de bienvenida al cargar la página
