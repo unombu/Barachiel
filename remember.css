@@ -10,7 +10,7 @@ body {
   font-family: "Courier Prime", monospace;
   height: 100vh;
   overflow: hidden;
-  background-image: url("laptop-background.png");
+  background-image: url("/images/laptop-background.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -264,4 +264,80 @@ body {
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+body.tv-off {
+  overflow: hidden;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.overlay.active {
+  display: flex;
+}
+
+.overlay::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100vw;
+  height: 2px;
+  background: white;
+  transform: translate(-50%, -50%);
+  animation: tv-off-anim 0.5s ease-out forwards;
+}
+
+@keyframes tv-off-anim {
+  0% {
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+  }
+  50% {
+    width: 100vw;
+    height: 2px;
+    border-radius: 0;
+  }
+  100% {
+    width: 0;
+    height: 2px;
+    border-radius: 50%;
+  }
+}
+
+.orb {
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(circle, #FFD700, #FFA500, #FF8C00);
+  border-radius: 50%;
+  box-shadow: 0 0 20px 10px #FFD700, 0 0 30px 20px #FFA500;
+  display: none;
+  animation: fadeInOrb 1s 0.5s forwards;
+}
+
+.overlay.active .orb {
+  display: block;
+}
+
+@keyframes fadeInOrb {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
