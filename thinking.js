@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Manejar acciones especiales
     handleAction(responseData.action, responseData);
 
-    if (responseData.next && responseData.next.length > 0) {
+    if ((responseData.next && responseData.next.length > 0 ) || !responseData.action) {
       const options = responseData.next.map((opID) => {
         // Añadimos el ID original para futuras referencias
         return { ...data.opciones[opID], id: opID };
@@ -74,7 +74,18 @@ document.addEventListener("DOMContentLoaded", async () => {
           break;
         case "VERIFY":
           console.log("Se requiere verificación.");
-          verificar(data.KEYWORD, data.CONSUELO);
+          while (data.CONSUELO.length > 0) {
+            if (!verificar(data.KEYWORD)){
+              let output = data.CONSUELO.pop()
+              systemMessage(output);
+            } else {
+              processResponse(data.next);
+              break;
+            }
+          }
+          errorMessage("Number of attempts exceeded")
+          errorMessage("Rebooting...")
+          initializeChat();
           break;
         case "KILLSWITCH":
           errorMessage("CONEXIÓN TERMINADA.");
@@ -204,7 +215,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
 
-  function verificar(keywords, consuelo) {
+  function verificar(keywords) {
     let palabraActual = "";
     let palabrasClave;
 
