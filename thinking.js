@@ -125,7 +125,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       // La opción seleccionada nos lleva a una nueva respuesta
       const nextResponseId = optionData.next[0];
       processResponse(nextResponseId);
-      if (data.responses[nextResponseId].action == "RENOVE_OPTION"){
+      if (data.responses[nextResponseId].action == "REMOVE_OPTION"){
         currentOptions = currentOptions.filter(option => option.id !== optionData.id);
         showOptions(currentOptions);
       }
