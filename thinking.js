@@ -59,7 +59,7 @@ async function processResponse(id) {
     await systemMessage(responseData.contenido);
   }
   handleAction(responseData.action, responseData);
-  if ((responseData.next && responseData.next.length > 0) && !responseData.action) {
+  if ((responseData.next && responseData.next.length > 0) && responseData.action == "NULL") {
     const options = responseData.next.map((opID) => {
       return { ...data.opciones[opID], id: opID };
     });
