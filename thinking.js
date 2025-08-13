@@ -127,7 +127,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       processResponse(nextResponseId);
       if (data.responses[nextResponseId].action == "RENOVE_OPTION"){
         currentOptions = currentOptions.filter(option => option.id !== optionData.id);
-        showOptions(options);
+        showOptions(currentOptions);
       }
     } else {
       // Si una opción no tiene 'next', podría ser el final de esa rama
