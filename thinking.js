@@ -67,25 +67,25 @@ document.addEventListener("DOMContentLoaded", async () => {
     // El 'action' puede ser un array o un string
     const actions = Array.isArray(action) ? action : [action];
 
-    actions.forEach((act) => {
+    actions.forEach(async (act) => {
       switch (act) {
         case "AUDIO":
           reproducirAudio(data.AUDIO);
           break;
         case "VERIFY":
           console.log("Se requiere verificación.");
-          while (data.CONSUELO.length > 0) {
-            if (!verificar(data.KEYWORD)){
-              let output = data.CONSUELO.pop()
-              systemMessage(output);
-            } else {
-              processResponse(data.next);
-              break;
-            }
+          const esValido = await verificar(data.KEYWORD, data.CONSUELO);
+          
+          if (esValido) {
+              if (data.next) {
+                  processResponse(data.next[0]);
+              }
+          } else {
+              // Se agotaron los intentos. Llama a la lógica de reinicio.
+              errorMessage("Number of attempts exceeded");
+              errorMessage("Rebooting...");
+              initializeChat();
           }
-          errorMessage("Number of attempts exceeded")
-          errorMessage("Rebooting...")
-          initializeChat();
           break;
         case "KILLSWITCH":
           errorMessage("CONEXIÓN TERMINADA.");
@@ -215,50 +215,112 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
 
-  function verificar(keywords) {
-    let palabraActual = "";
-    let palabrasClave;
+  // function verificar(keywords) {
+  //   let palabraActual = "";
+  //   let palabrasClave;
 
-    // Convertimos las keywords a un array si es necesario
-    if (typeof keywords === "string") {
-      palabrasClave = keywords
-        .split(",")
-        .map((keyword) => keyword.trim().toLowerCase());
-    } else if (Array.isArray(keywords)) {
-      palabrasClave = keywords.map((keyword) => keyword.toLowerCase());
-    } else {
-      console.error("El formato de las keywords no es válido.");
-      return;
-    }
+  //   // Convertimos las keywords a un array si es necesario
+  //   if (typeof keywords === "string") {
+  //     palabrasClave = keywords
+  //       .split(",")
+  //       .map((keyword) => keyword.trim().toLowerCase());
+  //   } else if (Array.isArray(keywords)) {
+  //     palabrasClave = keywords.map((keyword) => keyword.toLowerCase());
+  //   } else {
+  //     console.error("El formato de las keywords no es válido.");
+  //     return;
+  //   }
 
-    // Definimos la función que se ejecutará en cada pulsación de tecla
-    const handleKeyDown = (event) => {
-      // Si la tecla es una letra o un número
-      if (event.key.length === 1 && /[a-zA-Z0-9]/.test(event.key)) {
-        palabraActual += event.key.toLowerCase();
-      } else if (event.key === "Backspace") {
-        // Elimina el último caracter si se presiona la tecla de borrar
-        palabraActual = palabraActual.slice(0, -1);
-      } else if (event.key === "Enter") {
-        if (palabrasClave.includes(palabraActual.toLocaleUpperCase())) {
-          return true;
-        } else {
-          return false;
-        }
-      }
+  //   // Definimos la función que se ejecutará en cada pulsación de tecla
+  //   const handleKeyDown = (event) => {
+  //     // Si la tecla es una letra o un número
+  //     if (event.key.length === 1 && /[a-zA-Z0-9]/.test(event.key)) {
+  //       palabraActual += event.key.toLowerCase();
+  //     } else if (event.key === "Backspace") {
+  //       // Elimina el último caracter si se presiona la tecla de borrar
+  //       palabraActual = palabraActual.slice(0, -1);
+  //     } else if (event.key === "Enter") {
+  //       if (palabrasClave.includes(palabraActual.toLocaleUpperCase())) {
+  //         return true;
+  //       } else {
+  //         return false;
+  //       }
+  //     }
 
 
-        document.removeEventListener("keydown", handleKeyDown);
-        console.log("Listener de teclado desactivado.");
-    };
+  //       document.removeEventListener("keydown", handleKeyDown);
+  //       console.log("Listener de teclado desactivado.");
+  //   };
 
-    // Agregamos el event listener al documento
-    document.addEventListener("keydown", handleKeyDown);
-    console.log("Listener de teclado activado. Escribe una de las keywords.");
-  }
+  //   // Agregamos el event listener al documento
+  //   document.addEventListener("keydown", handleKeyDown);
+  //   console.log("Listener de teclado activado. Escribe una de las keywords.");
+  // }
 
 
 });
+
+
+/**
+ * Inicia un proceso de verificación de keywords con múltiples intentos.
+ * @param {string|string[]} keywords - Palabras clave a verificar.
+ * @param {string[]} mensajesConsuelo - Array de mensajes a mostrar en cada intento fallido.
+ * @returns {Promise<boolean>} - Resuelve con `true` si la verificación es exitosa, `false` si se agotan los intentos.
+ */
+function verificar(keywords, mensajesConsuelo) {
+  return new Promise((resolve) => {
+    let palabraActual = "";
+    let palabrasClave;
+    let intentosRestantes = mensajesConsuelo.length + 1; // Un intento más que los mensajes de consuelo
+    let verificationListener; // Declaramos el listener para poder removerlo
+
+    // Normalizar keywords
+    if (typeof keywords === "string") {
+      palabrasClave = keywords
+        .split(",")
+        .map((k) => k.trim().toLowerCase());
+    } else if (Array.isArray(keywords)) {
+      palabrasClave = keywords.map((k) => k.toLowerCase());
+    } else {
+      console.error("El formato de las keywords no es válido.");
+      resolve(false);
+      return;
+    }
+
+    const handleKeyDown = (event) => {
+      // Manejar la entrada de texto
+      if (event.key.length === 1 && /[a-zA-Z0-9]/.test(event.key)) {
+        palabraActual += event.key.toLowerCase();
+      } else if (event.key === "Backspace") {
+        palabraActual = palabraActual.slice(0, -1);
+      } else if (event.key === "Enter") {
+        intentosRestantes--;
+
+        // Verificar la coincidencia
+        if (palabrasClave.includes(palabraActual)) {
+          document.removeEventListener("keydown", verificationListener);
+          resolve(true); // Verificación exitosa
+        } else {
+          // Intento fallido
+          if (intentosRestantes > 0) {
+            const mensaje = mensajesConsuelo[mensajesConsuelo.length - intentosRestantes - 1];
+            systemMessage(mensaje); // Mostrar mensaje de consuelo
+            palabraActual = ""; // Limpiar la palabra para el siguiente intento
+          } else {
+            document.removeEventListener("keydown", verificationListener);
+            resolve(false); // Se agotaron los intentos
+          }
+        }
+      }
+    };
+    
+    // Asignar y agregar el listener
+    verificationListener = handleKeyDown;
+    document.addEventListener("keydown", verificationListener);
+    console.log("Verificación iniciada. Tienes " + (mensajesConsuelo.length + 1) + " intentos.");
+  });
+}
+
 
 /**
  * Pone la pantalla en negro, muestra un mensaje de reinicio y refresca la página.
