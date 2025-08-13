@@ -173,7 +173,8 @@ function verificar(keywords, mensajesConsuelo) {
           resolve(true);
         } else {
           if (intentosRestantes > 0) {
-            const mensaje = mensajesConsuelo[mensajesConsuelo.length - intentosRestantes - 1];
+            // Lógica corregida para obtener el mensaje
+            const mensaje = mensajesConsuelo[mensajesConsuelo.length - intentosRestantes];
             systemMessage(mensaje);
             palabraActual = "";
           } else {
@@ -188,7 +189,6 @@ function verificar(keywords, mensajesConsuelo) {
     console.log("Verificación iniciada. Tienes " + (mensajesConsuelo.length + 1) + " intentos.");
   });
 }
-
 
 function reproducirAudio(ruta_audio) {
   const audio = new Audio();
