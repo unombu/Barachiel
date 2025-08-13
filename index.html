@@ -1,27 +1,35 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Terminal Talos - Laptop Interface</title>
-    <link rel="stylesheet" href="remember.css">
-</head>
-<body>
+    <link rel="stylesheet" href="remember.css" />
+  </head>
+  <body>
     <div class="scene-container">
-        <div class="laptop-screen">
-            <div class="terminal-content">
-                <div id="output"></div>
-                <div class="input-line">
-                    <span class="prompt">&gt;</span>
-                    <input type="text" id="terminal-input" autofocus>
-                </div>
-            </div>
+      <div class="laptop-screen">
+        <div class="terminal-content">
+          <div id="output"></div>
+          <div class="input-line">
+            <span class="prompt">&gt;</span>
+            <input type="text" id="terminal-input" autofocus />
+          </div>
         </div>
-        <div class="terminal-options" id="options-container">
-            <!-- Las opciones se generarán dinámicamente -->
-        </div>
+      </div>
+      <div id="audio"></div>
+      <div class="terminal-options" id="options-container">
+        <!-- Las opciones se generarán dinámicamente -->
+      </div>
+    </div>
+
+    <div id="reboot-overlay">
+      <div class="reboot-content">
+        <div class="spinner"></div>
+        <p>Rebooting...</p>
+      </div>
     </div>
 
     <script src="thinking.js"></script>
-</body>
+  </body>
 </html>

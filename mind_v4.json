@@ -297,11 +297,11 @@
             "action": "STARS"
         },
         "37": {
-            "contenido": "",
+            "contenido": "I GOT IN!!! LETS G----..... .",
             "next": [
                 "79"
             ],
-            "action": "VERIFY",
+            "action": "CHAOS",
             "CONDITIONAL": "(victory == true)"
         },
         "38": {
@@ -378,7 +378,7 @@
     },
     "49": {
       "contenido": "Then why should I tell you?",
-      "next": []
+      "next": ["7"]
     },
     "50": {
       "contenido": "You're right.",
