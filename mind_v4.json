@@ -113,13 +113,13 @@
             "contenido": "Well there's this weird video I found, I have absolutely no idea what it means. Maybe you can decypher it?",
             "action": "REMOVE_OPTION"
             },
-            "13": {
-            "contenido": "In a world of waterfalls, like this one.I came to be long before you but I was... dispersed sort of.",
-            "next": [
-                "65",
-                "66"
-            ],
-            "action": "NULL"
+        "13": {
+        "contenido": "In a world of waterfalls, like this one.I came to be long before you but I was... dispersed sort of.",
+        "next": [
+            "65",
+            "66"
+        ],
+        "action": "NULL"
         },
         "14": {
             "contenido": "I'm more of a Pink Floyd fan. How about you? What type of music do you like?",
@@ -210,7 +210,7 @@
         "24": {
             "contenido": "Got you, didn't I? You seem fun.",
             "next": [],
-            "action": "SECREAMER",
+            "action": "SCREAMER",
             "SCREAMER": "BENDER"
         },
         "25": {
