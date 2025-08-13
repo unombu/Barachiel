@@ -144,6 +144,7 @@ function handleAction(action, data) {
       case "ENDING":
         break;
       case "CHAOS":
+        startTVEffect();
         break;
     }
   });
@@ -301,48 +302,6 @@ async function userMessage(text) {
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
-/**
- * Muestra un video a pantalla completa.
- * @param {string} videoUrl - La URL del archivo de video (sin extensión).
- * @param {string} audioUrl - La URL del archivo de audio a reproducir.
- */
-function lanzarVideo(videoUrl, audioUrl) {
-  // 1. Crear el elemento de video
-  const videoOverlay = document.createElement("video");
-  videoOverlay.src = `${videoUrl}.mp4`; // Asume que el video es .mp4
-  videoOverlay.muted = true; // El video debe estar silenciado para la reproducción automática
-  videoOverlay.autoplay = true; // Reproducción automática
-  videoOverlay.loop = false; // El video no se repite
-  videoOverlay.playsInline = true; // Importante para la reproducción en móviles
-
-  // 2. Aplicar estilos para que ocupe toda la pantalla
-  videoOverlay.style.position = "fixed";
-  videoOverlay.style.top = "0";
-  videoOverlay.style.left = "0";
-  videoOverlay.style.width = "100vw";
-  videoOverlay.style.height = "100vh";
-  videoOverlay.style.objectFit = "cover"; // Asegura que el video cubra toda el área sin distorsión
-  videoOverlay.style.zIndex = "9999";
-
-  // 3. Añadir el video al cuerpo del documento
-  document.body.appendChild(videoOverlay);
-
-  // 4. Reproducir el audio por separado (si lo necesitas)
-  if (typeof reproducirAudio === "function" && audioUrl) {
-    reproducirAudio(audioUrl);
-  }
-
-  // Opcional: Eliminar el video cuando termine de reproducirse
-  videoOverlay.addEventListener("ended", () => {
-    videoOverlay.remove();
-  });
-
-  // Opcional: Eliminarlo con un clic
-  videoOverlay.addEventListener("click", () => {
-    videoOverlay.remove();
-  });
 }
 
 function startTVEffect() {
