@@ -64,7 +64,7 @@ async function processResponse(id) {
   if (responseData.contenido) {
     await systemMessage(responseData.contenido);
   }
-  handleAction(responseData.action, responseData);
+  handleAction(responseData.action, { ...responseData, id: id });
   if (
     responseData.next &&
     responseData.next.length > 0 &&
@@ -178,6 +178,9 @@ function stars() {
   }
   overlay.style.display = "flex";
   generateStars(169);
+  overlay.addEventListener("click", () => {
+    overlay.style.display = "none";
+  });
   backtocheckpoint();
 }
 
