@@ -68,7 +68,7 @@ async function processResponse(id) {
   if (
     responseData.next &&
     responseData.next.length > 0 &&
-    responseData.next != []
+    responseData.action != "VERIFY"
   ) {
     const options = responseData.next.map((opID) => {
       return { ...data.opciones[opID], id: opID };
@@ -94,6 +94,7 @@ async function handleOptionSelect(optionData) {
     console.log(
       `Fin de la rama de conversación en la opción ${optionData.id}.`
     );
+    backtocheckpoint();
   }
 }
 
@@ -144,7 +145,7 @@ function handleAction(action, data) {
         break;
       case "SCREAMER":
         if (data.SCREAMER == "LICH") {
-          lanzarScreamer("path/to/lich.jpg", "path/to/lich-audio.mp3");
+          lanzarScreamer("/images/lich.jpg", "/audios/lich.mp3");
         }
         if (data.SCREAMER == "BENDER") {
           lanzarScreamer("path/to/bender.jpg", "path/to/bender-audio.mp3");
@@ -192,6 +193,7 @@ function backtocheckpoint() {
 }
 
 function verificar(keywords, mensajesConsuelo) {
+  optionsContainer.innerHTML = "";
   return new Promise((resolve) => {
     let palabraActual = "";
     let palabrasClave;
