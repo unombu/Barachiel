@@ -351,7 +351,7 @@ body.tv-off {
 }
 
 #stars-overlay {
-  display: flex; /* oculto */
+  display: none; /* oculto */
   position: fixed;
   top: 0;
   left: 0;
