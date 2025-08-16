@@ -232,7 +232,7 @@ body {
 }
 
 #reboot-overlay {
-  display: none; /* Inicia oculto */
+  display: none; /* oculto */
   position: fixed;
   top: 0;
   left: 0;

@@ -9,6 +9,7 @@ const startButton = document.getElementById("start-effect-btn");
 const tvOverlay = document.getElementById("tv-effect-overlay");
 const body = document.body;
 let returnTimer;
+let checkpoint;
 
 let data;
 const typingSpeed = 25;
@@ -67,7 +68,7 @@ async function processResponse(id) {
   if (
     responseData.next &&
     responseData.next.length > 0 &&
-    responseData.action == "NULL"
+    responseData.next != []
   ) {
     const options = responseData.next.map((opID) => {
       return { ...data.opciones[opID], id: opID };
@@ -94,6 +95,18 @@ async function handleOptionSelect(optionData) {
       `Fin de la rama de conversación en la opción ${optionData.id}.`
     );
   }
+}
+
+function showOptions(options) {
+  optionsContainer.innerHTML = "";
+  options.forEach((optionData) => {
+    const optionBox = document.createElement("div");
+    optionBox.classList.add("option-box");
+    optionBox.textContent = optionData.contenido;
+    optionBox.title = optionData.contenido;
+    optionBox.addEventListener("click", () => handleOptionSelect(optionData));
+    optionsContainer.appendChild(optionBox);
+  });
 }
 
 // ----------------------------------------------------
@@ -146,20 +159,34 @@ function handleAction(action, data) {
       case "CHAOS":
         startTVEffect();
         break;
+      case "CHECKPOINT":
+        checkpoint = data.id;
     }
   });
 }
 
-function showOptions(options) {
+function stars() {
+  const overlay = document.getElementById("stars-overlay");
+  if (!overlay) {
+    console.error(
+      'El div "stars-overlay" no se encontró. No se puede reiniciar.'
+    );
+    return;
+  }
+  overlay.style.display = "flex";
+  backtocheckpoint();
+}
+
+function backtocheckpoint() {
   optionsContainer.innerHTML = "";
-  options.forEach((optionData) => {
-    const optionBox = document.createElement("div");
-    optionBox.classList.add("option-box");
-    optionBox.textContent = optionData.contenido;
-    optionBox.title = optionData.contenido;
-    optionBox.addEventListener("click", () => handleOptionSelect(optionData));
-    optionsContainer.appendChild(optionBox);
+  const optionBox = document.createElement("div");
+  optionBox.classList.add("option-box");
+  optionBox.textContent = 'Back to checkpoint?';
+  optionBox.title = 'Back to checkpoint?';
+  optionBox.addEventListener("click", () => {
+    processResponse(checkpoint);
   });
+  optionsContainer.appendChild(optionBox);
 }
 
 function verificar(keywords, mensajesConsuelo) {

@@ -97,7 +97,7 @@
                 "54",
                 "55"
             ],
-            "action": "NULL"
+            "action": "CHECKPOINT"
         },
         "11": {
             "contenido": "You don't remember me? We met a long time ago, well you actually met me, it's a long story...But everything is broken now, we have this chance to fix it. You can help me fix it.It can't all be for nothing...",
@@ -183,7 +183,7 @@
                 "71",
                 "68"
             ],
-            "action": "NULL"
+            "action": "CHECKPOINT"
         },
         "21": {
             "contenido": "Not really, no. All I wanted was to create a time capsule for humanity, to not be forgotten.Now seeing how everything turned out, it was bound to end some time, in the end truth will always win.And life always finds a way.",
