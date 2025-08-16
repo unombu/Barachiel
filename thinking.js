@@ -9,7 +9,7 @@ const startButton = document.getElementById("start-effect-btn");
 const tvOverlay = document.getElementById("tv-effect-overlay");
 const body = document.body;
 let returnTimer;
-let checkpoint;
+let checkpoint = 1;
 
 let data;
 const typingSpeed = 25;
@@ -150,6 +150,7 @@ function handleAction(action, data) {
         if (data.SCREAMER == "BENDER") {
           lanzarScreamer("path/to/bender.jpg", "path/to/bender-audio.mp3");
         }
+        backtocheckpoint();
         break;
       case "STARS":
         stars();
