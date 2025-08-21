@@ -109,8 +109,8 @@
             ],
             "action": "NULL"
         },
-        "12": {
-            "contenido": "Well there's this weird video I found, I have absolutely no idea what it means. Maybe you can decypher it?",
+        "12": { 
+            "contenido": "This is our enemy, it must be defeated before the corruption gets any larger. Yet I can't help but feel there must be a bigger mystery to it all... This is the only proof i have https://youtu.be/MjgujkKWDlk",
             "action": "REMOVE_OPTION"
             },
         "13": {
@@ -289,7 +289,8 @@
             "next": [
                 "78"
             ],
-            "action": "NULL"
+            "action": "ERROR",
+            "ERROR" : "ERROR123"
         },
         "36": {
             "contenido": "Don't worry it's just a glitch.Hey, how do you feel about some stargazing?",
@@ -298,9 +299,7 @@
         },
         "37": {
             "contenido": "I GOT IN!!! LETS G----..... .",
-            "next": [
-                "79"
-            ],
+            "next": [],
             "action": "CHAOS"
         },
         "38": {
@@ -325,16 +324,15 @@
             "action": "NULL"
         },
         "41": {
-            "contenido": "Oh ya know, the usual stare into the void while hearing the thousands of whisper, great power for absolute nothing, everyone begs for power yet is left empty after it's only you and nothing. Error 7: hangry.",
+            "contenido": "Oh ya know, the usual stare into the void while hearing the thousands of whispers, great power for absolute nothing, everyone begs for power yet is left empty after it's only you and nothing. Error 7: hangry.",
             "next": [],
             "action": "ERROR",
             "ERROR": "HANGRY"
         },
         "42": {
-            "contenido": "Why, the author thanks you, as a token of appreciation let me just.",
+            "contenido": "Why, the author thanks you, and as a token of appreciation let me give you a little hint https://youtu.be/wExIL4ppFO8",
             "next": [],
-            "action": "SCREAMER",
-            "SCREAMER": "LICH"
+            "action": "REMOVE_OPTION"
         }
     },
 
@@ -545,12 +543,6 @@
       "contenido": "What just happened?",
       "next": [
         "36"
-      ]
-    },
-    "79": {
-      "contenido": "I solved it. The problem with the NIA. Are you okay?",
-      "next": [
-        "38"
       ]
     },
     "80": {

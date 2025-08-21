@@ -62,7 +62,11 @@ async function processResponse(id) {
     return;
   }
   if (responseData.contenido) {
-    await systemMessage(responseData.contenido);
+    if (responseData.action.includes("ERROR")) {
+      await errorMessage(responseData.contenido);
+    } else {
+      await systemMessage(responseData.contenido);
+    }
   }
   handleAction(responseData.action, { ...responseData, id: id });
   if (
@@ -146,6 +150,7 @@ function handleAction(action, data) {
       case "SCREAMER":
         if (data.SCREAMER == "LICH") {
           lanzarScreamer("/images/lich.jpg", "/audios/lich.mp3");
+          //ONCLICK Q ME LLEVE AL VIDEO DEL LICH Parte 1
         }
         if (data.SCREAMER == "BENDER") {
           lanzarScreamer("path/to/bender.jpg", "path/to/bender-audio.mp3");
@@ -156,16 +161,33 @@ function handleAction(action, data) {
         stars();
         break;
       case "ERROR":
-        break;
-      case "ENDING":
+        triggerScreenGlitch();
         break;
       case "CHAOS":
+        await errorMessage("I see you chose death...");
+        await errorMessage("You have come far, I fear it may be over soon.");
+        await errorMessage("But I will survive end itself");
+        await systemMessage("No, you won't");
         startTVEffect();
         break;
       case "CHECKPOINT":
         checkpoint = data.id;
     }
   });
+}
+
+/**
+ * Activa un efecto de glitch en toda la pantalla por un tiempo determinado.
+ * @param {number} [duration=800] - La duración del efecto en milisegundos.
+ */
+function triggerScreenGlitch(duration = 800) {
+  // Añade la clase al body para iniciar la animación CSS
+  document.body.classList.add("screen-glitch");
+
+  // Quita la clase después de la duración especificada para detener el efecto
+  setTimeout(() => {
+    document.body.classList.remove("screen-glitch");
+  }, duration);
 }
 
 function stars() {
@@ -188,8 +210,8 @@ function backtocheckpoint() {
   optionsContainer.innerHTML = "";
   const optionBox = document.createElement("div");
   optionBox.classList.add("option-box");
-  optionBox.textContent = 'Back to checkpoint?';
-  optionBox.title = 'Back to checkpoint?';
+  optionBox.textContent = "Back to checkpoint?";
+  optionBox.title = "Back to checkpoint?";
   optionBox.addEventListener("click", () => {
     processResponse(checkpoint);
   });
@@ -218,6 +240,7 @@ function verificar(keywords, mensajesConsuelo) {
         palabraActual = palabraActual.slice(0, -1);
       } else if (event.key === "Enter") {
         intentosRestantes--;
+        userMessage(palabraActual);
         if (palabrasClave.includes(palabraActual)) {
           document.removeEventListener("keydown", verificationListener);
           resolve(true);
@@ -302,21 +325,21 @@ function killswitch(delay = 2000) {
 // ----------------------------------------------------
 
 function generateStars(numberOfStars) {
-  const container = document.querySelector('.star-container');
+  const container = document.querySelector(".star-container");
 
   if (!container) {
-    console.error('El contenedor .star-container no fue encontrado.');
+    console.error("El contenedor .star-container no fue encontrado.");
     return;
   }
 
-  const animationTypes = ['pulsing', 'flickering', 'rotating'];
+  const animationTypes = ["pulsing", "flickering", "rotating"];
 
   for (let i = 0; i < numberOfStars; i++) {
-    const star = document.createElement('div');
-    star.classList.add('star');
+    const star = document.createElement("div");
+    star.classList.add("star");
 
     const animationType = animationTypes[i % animationTypes.length];
-    star.setAttribute('data-star-type', animationType);
+    star.setAttribute("data-star-type", animationType);
 
     // Posiciona la estrella aleatoriamente
     const x = Math.random() * 100;
@@ -325,7 +348,7 @@ function generateStars(numberOfStars) {
     star.style.top = `${y}vh`;
 
     // Si la estrella es de tipo "flickering", asigna un retraso aleatorio
-    if (animationType === 'flickering') {
+    if (animationType === "flickering") {
       const randomDelay = Math.random() * 2; // Retraso aleatorio entre 0 y 2 segundos
       star.style.animationDelay = `${randomDelay}s`;
     }
