@@ -72,7 +72,7 @@ async function processResponse(id) {
   if (
     responseData.next &&
     responseData.next.length > 0 &&
-    responseData.action != "VERIFY"
+    !responseData.action.includes("VERIFY")
   ) {
     const options = responseData.next.map((opID) => {
       return { ...data.opciones[opID], id: opID };
@@ -162,13 +162,13 @@ function handleAction(action, data) {
         break;
       case "CHAOS":
         await errorMessage("Such a fool...");
-        sleep(1500)
+        await sleep(1500)
         await errorMessage("You have come far, I fear it may be over soon.");
-        sleep(2000)
+        await sleep(2000)
         await errorMessage("But I will survive end itself");
-        sleep(1500)
+        await sleep(1500)
         await systemMessage("No, you won't");
-        sleep(1000)
+        await sleep(1000)
         startTVEffect();
         break;
       case "CHECKPOINT":

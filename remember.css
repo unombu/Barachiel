@@ -621,7 +621,7 @@ body.screen-glitch::after {
     height: 10px;
     background-color: red;
     border-radius: 50%;
-    animation: confetti-fall 2s ease-in forwards;
+    animation: confetti-fall 2s ease-in;
     z-index: 5;
 }
 
