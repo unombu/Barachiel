@@ -51,6 +51,7 @@ async function initializeChat() {
   await sleep(1500);
   await systemMessage("Support session opened.");
   await sleep(1500);
+  processResponse("1");
 }
 
 async function processResponse(id) {
