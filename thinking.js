@@ -7,6 +7,7 @@ const inputElement = document.getElementById("terminal-input");
 const optionsContainer = document.getElementById("options-container");
 const startButton = document.getElementById("start-effect-btn");
 const tvOverlay = document.getElementById("tv-effect-overlay");
+const imagenContainer = document.getElementById("imagen-container");
 const body = document.body;
 let returnTimer;
 let checkpoint = 1;
@@ -124,6 +125,7 @@ function handleAction(action, data) {
     switch (act) {
       case "AUDIO":
         reproducirAudio(`${data.AUDIO}.mp3`);
+        backtocheckpoint();
         break;
       case "VERIFY":
         const esValido = await verificar(data.KEYWORD, data.CONSUELO);
@@ -145,7 +147,6 @@ function handleAction(action, data) {
         break;
       case "IMAGEN":
         abrirImagen();
-
         break;
       case "GO_TO_0":
         initializeChat();
@@ -169,6 +170,9 @@ function handleAction(action, data) {
         break;
       case "CHECKPOINT":
         checkpoint = data.id;
+        break;
+      case "LINK":
+        systemMessageWithLink(data.LINK, data.LINK);
     }
   });
 }
@@ -375,29 +379,6 @@ function typeText(text, className = "") {
   });
 }
 
-function typeLink(dataLink) {
-  return new Promise((resolve) => {
-    isTyping = true;
-    const link = document.createElement("a");
-    link.href = `${dataLink}`;
-    if (className) element.classList.add("system-message");
-    outputElement.appendChild(link);
-    let index = 0;
-    const typeNextChar = () => {
-      if (index < text.length) {
-        link.textContent += text.charAt(index);
-        index++;
-        outputElement.scrollTop = outputElement.scrollHeight;
-        setTimeout(typeNextChar, typingSpeed);
-      } else {
-        isTyping = false;
-        resolve();
-      }
-    };
-    typeNextChar();
-  });
-}
-
 async function systemMessage(text) {
   await typeText(text, "system-message");
 }
@@ -418,7 +399,6 @@ function startTVEffect() {
   body.classList.add("tv-off");
   tvOverlay.classList.add("active");
 
-  // Inicia el temporizador de 15 minutos para volver a la normalidad
   returnTimer = setTimeout(resetEffect, 15 * 60 * 1000); // 15 minutos en milisegundos
 }
 
@@ -429,16 +409,58 @@ function resetEffect() {
 }
 
 function abrirImagen() {
-  const imagenContainer = document.getElementById("imagen-container");
+  if (imagenContainer.classList.contains("visible")) {
+    return;
+  }
 
   imagenContainer.classList.add("visible");
 
-  imagenContainer.addEventListener("click", cerrarImagen());
+  imagenContainer.addEventListener("click", cerrarImagen);
 }
 
+// Función para cerrar la imagen
 function cerrarImagen() {
+  if (!imagenContainer.classList.contains("visible")) {
+    return;
+  }
   imagenContainer.classList.remove("visible");
-  consolaTexto.style.display = "block";
+
+  imagenContainer.removeEventListener("click", cerrarImagen);
+}
+
+async function systemMessageWithLink(text, linkUrl) {
+  const outputDiv = document.getElementById("output");
+
+  const messageContainer = document.createElement("div");
+  messageContainer.classList.add("system-message");
+
+  const linkElement = document.createElement("a");
+  linkElement.href = linkUrl;
+  linkElement.target = "_blank";
+
+  messageContainer.appendChild(linkElement);
+  outputDiv.appendChild(messageContainer);
+
+  await typeTextInElement(linkElement, text);
+  outputDiv.scrollTop = outputDiv.scrollHeight;
+}
+
+function typeTextInElement(element, text) {
+  return new Promise((resolve) => {
+    isTyping = true;
+    let index = 0;
+    const typeNextChar = () => {
+      if (index < text.length) {
+        element.textContent += text.charAt(index);
+        index++;
+        setTimeout(typeNextChar, typingSpeed);
+      } else {
+        isTyping = false;
+        resolve();
+      }
+    };
+    typeNextChar();
+  });
 }
 
 // ----------------------------------------------------
