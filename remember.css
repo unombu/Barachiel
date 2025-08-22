@@ -501,3 +501,29 @@ body.screen-glitch::after {
         clip-path: polygon(0 80%, 100% 80%, 100% 90%, 0 90%);
     }
 }
+
+.imagen-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out, transform 1.5s ease-in-out;
+}
+
+.imagen-container.visible {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    animation: abrir-imagen 1.5s forwards;
+}
+
+@keyframes abrir-imagen {
+    0% { transform: translate(-50%, -50%) scale(0.1); opacity: 0; }
+    100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
+#imagen {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}

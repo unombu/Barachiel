@@ -262,7 +262,7 @@ function verificar(keywords, mensajesConsuelo) {
 
 function reproducirAudio(ruta_audio) {
   const audio = new Audio();
-  audio.src = `/audios/${ruta_audio}.mp3`;
+  audio.src = `/audios/${ruta_audio}`;
   audio
     .play()
     .then(() => {
@@ -282,7 +282,7 @@ function lanzarScreamer(imagenUrl, audioUrl) {
   screamerOverlay.style.height = "100vh";
   screamerOverlay.style.backgroundColor = "black";
   screamerOverlay.style.zIndex = "9999";
-  screamerOverlay.style.backgroundImage = `url('${imagenUrl}')`;
+  screamerOverlay.style.backgroundImage = `url('/images/${imagenUrl}')`;
   screamerOverlay.style.backgroundPosition = "center";
   screamerOverlay.style.backgroundRepeat = "no-repeat";
   screamerOverlay.style.backgroundSize = "contain";
@@ -307,7 +307,7 @@ function killswitch(delay = 2000) {
     return;
   }
   overlay.style.display = "flex";
-  reproducirAudio('LICH');
+  reproducirAudio('LICH.mp3');
   setTimeout(() => {
     window.location.reload();
   }, delay);
