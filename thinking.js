@@ -141,6 +141,7 @@ function handleAction(action, data) {
         break;
       case "KILLSWITCH":
         errorMessage("CONEXIÓN TERMINADA.");
+        lanzarScreamer(`LICH.jpg`, `LICH.mp3`);
         await sleep(2000);
         optionsContainer.innerHTML = "";
         killswitch();
