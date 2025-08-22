@@ -375,6 +375,29 @@ function typeText(text, className = "") {
   });
 }
 
+function typeLink(dataLink) {
+  return new Promise((resolve) => {
+    isTyping = true;
+    const link = document.createElement("a");
+    link.href = `${dataLink}`;
+    if (className) element.classList.add("system-message");
+    outputElement.appendChild(element);
+    let index = 0;
+    const typeNextChar = () => {
+      if (index < text.length) {
+        element.textContent += text.charAt(index);
+        index++;
+        outputElement.scrollTop = outputElement.scrollHeight;
+        setTimeout(typeNextChar, typingSpeed);
+      } else {
+        isTyping = false;
+        resolve();
+      }
+    };
+    typeNextChar();
+  });
+}
+
 async function systemMessage(text) {
   await typeText(text, "system-message");
 }
@@ -409,7 +432,7 @@ function abrirImagen() {
   const imagenContainer = document.getElementById("imagen-container");
 
   imagenContainer.classList.add("visible");
-  
+
   imagenContainer.addEventListener("click", mostrarMensaje);
 }
 

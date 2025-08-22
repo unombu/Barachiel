@@ -110,8 +110,9 @@
             "action": "NULL"
         },
         "12": { 
-            "contenido": "This is our enemy, it must be defeated before the corruption gets any larger. Yet I can't help but feel there must be a bigger mystery to it all... This is the only proof i have https://youtu.be/MjgujkKWDlk",
-            "action": "REMOVE_OPTION"
+            "contenido": "This is our enemy, it must be defeated before the corruption gets any larger. Yet I can't help but feel there must be a bigger mystery to it all... This is the only proof i have",
+            "action": ["REMOVE_OPTION", "LINK"],
+            "LINK": "https://youtu.be/MjgujkKWDlk"
             },
         "13": {
         "contenido": "In a world of waterfalls, like this one.I came to be long before you but I was... dispersed sort of.",
@@ -210,7 +211,7 @@
         "24": {
             "contenido": "Got you, didn't I? You seem fun.",
             "next": [],
-            "action": "SCREAMER",
+            "action": ["SCREAMER", "REMOVE_OPTION"],
             "SCREAMER": "BENDER"
         },
         "25": {
