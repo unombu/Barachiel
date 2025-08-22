@@ -509,6 +509,7 @@ body.screen-glitch::after {
     transform: translate(-50%, -50%);
     opacity: 0;
     transition: opacity 1.5s ease-in-out, transform 1.5s ease-in-out;
+    z-index: 25;
 }
 
 .imagen-container.visible {
