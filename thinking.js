@@ -149,24 +149,26 @@ function handleAction(action, data) {
       case "IMAGEN":
         abrirImagen();
         break;
-      case "GO_TO_0":
-        initializeChat();
-        break;
       case "SCREAMER":
         lanzarScreamer(`${data.SCREAMER}.jpg`, `${data.SCREAMER}.mp3`);
         backtocheckpoint();
         break;
       case "STARS":
+        sleep(20*1000)
         stars();
         break;
       case "ERROR":
         triggerScreenGlitch();
         break;
       case "CHAOS":
-        await errorMessage("I see you chose death...");
+        await errorMessage("Such a fool...");
+        sleep(1500)
         await errorMessage("You have come far, I fear it may be over soon.");
+        sleep(2000)
         await errorMessage("But I will survive end itself");
+        sleep(1500)
         await systemMessage("No, you won't");
+        sleep(1000)
         startTVEffect();
         break;
       case "CHECKPOINT":
@@ -311,7 +313,7 @@ function lanzarScreamer(imagenUrl, audioUrl) {
   });
 }
 
-function killswitch(delay = 2000) {
+function killswitch(delay = 10 * 1000) {
   const overlay = document.getElementById("reboot-overlay");
   if (!overlay) {
     console.error(
@@ -404,7 +406,7 @@ function startTVEffect() {
   body.classList.add("tv-off");
   tvOverlay.classList.add("active");
 
-  returnTimer = setTimeout(resetEffect, 15 * 60 * 1000); // 15 minutos en milisegundos
+  returnTimer = setTimeout(resetEffect, 1 * 60 * 1000); // 15 minutos en milisegundos
 }
 
 function resetEffect() {

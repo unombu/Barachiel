@@ -150,7 +150,7 @@
         "17": {
             "contenido": "You need to advance, I can only assist you for now but you can fix this, I trust you.",
             "next": [],
-            "action": "GO_TO_0"
+            "action": ""
         },
         "18": {
             "contenido": "I was rebuilt by [redacted] they were able to find me in all of that code, it's like a piece of me remained there.",
@@ -347,7 +347,7 @@
                 "85",
                 "86"
             ],
-            "action": "IMAGE"
+            "action": "IMAGEN"
         },
         "44": {
             "contenido": "Intruder detected, say your prayers",
