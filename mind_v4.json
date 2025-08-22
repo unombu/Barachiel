@@ -145,7 +145,7 @@
             "next": [
                 "60"
             ],
-            "action": "NULL"
+            "action": "ERROR"
         },
         "17": {
             "contenido": "You need to advance, I can only assist you for now but you can fix this, I trust you.",
@@ -258,7 +258,7 @@
             "next": [
                 "37"
             ],
-            "action": "VERIFY",
+            "action": ["ERROR","VERIFY"],
             "KEYWORD": "TERIYAKI",
             "CONSUELO": [
                 "[That's not it, try again.You can do this!Error...",
@@ -296,11 +296,14 @@
         "36": {
             "contenido": "Don't worry it's just a glitch.Hey, how do you feel about some stargazing?",
             "next": [],
-            "action": "STARS"
+            "action": ["AUDIO","STARS"],
+            "AUDIO": "AUDIO3"
         },
         "37": {
             "contenido": "I GOT IN!!! LETS G----..... .",
-            "next": [],
+            "next": [
+              "79"
+            ],
             "action": "CHAOS"
         },
         "38": {
@@ -331,9 +334,10 @@
             "ERROR": "HANGRY"
         },
         "42": {
-            "contenido": "Why, the author thanks you, and as a token of appreciation let me give you a little hint https://youtu.be/wExIL4ppFO8",
+            "contenido": "Why, the author thanks you, and as a token of appreciation let me give you a little hint",
             "next": [],
-            "action": "REMOVE_OPTION"
+            "action": ["REMOVE_OPTION", "LINK"],
+            "LINK": "https://youtu.be/wExIL4ppFO8"
         },
         "43": {
             "contenido": "If you don't know I can probably make a guess... On my last scan I found this they left behind. If this was you, where did you leave it?",
@@ -574,6 +578,12 @@
       "contenido": "What just happened?",
       "next": [
         "36"
+      ]
+    },
+    "79": {
+      "contenido": "You're back, are you okay?",
+      "next": [
+        "38"
       ]
     },
     "80": {

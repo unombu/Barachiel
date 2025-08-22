@@ -172,8 +172,12 @@ function handleAction(action, data) {
       case "CHECKPOINT":
         checkpoint = data.id;
         break;
+      case "ENDING":
+        youWIN();
+        break;
       case "LINK":
         systemMessageWithLink(data.LINK, data.LINK);
+        backtocheckpoint();
     }
   });
 }
@@ -462,6 +466,71 @@ function typeTextInElement(element, text) {
     };
     typeNextChar();
   });
+}
+
+function youWIN() {
+    const contenedor = document.getElementById('celebration-container');
+    const textoWin = document.querySelector('.win-text');
+    
+    // Oculta el botón
+    document.getElementById('iniciar-fiesta').style.display = 'none';
+
+    // 1. Activa el fondo giratorio y el texto "YOU WIN"
+    contenedor.querySelector('.celebracion-container::before').style.opacity = 1;
+    textoWin.classList.add('animate');
+    
+    // 2. Hace que cada letra salte
+    const letters = textoWin.textContent.split('');
+    textoWin.innerHTML = '';
+    letters.forEach((char, index) => {
+        const span = document.createElement('span');
+        span.textContent = char;
+        span.classList.add('letter-jump');
+        span.style.animationDelay = `${index * 0.1}s`;
+        textoWin.appendChild(span);
+    });
+
+    // 3. Lanza el confeti
+    lanzarConfeti(100);
+
+    // 4. Inicia la secuencia de "fade to white"
+    setTimeout(() => {
+        document.body.classList.add('fade-to-white');
+    }, 4000); // Inicia después de 4 segundos de fiesta
+    
+    // 5. Reinicia la página para volver a empezar
+    setTimeout(() => {
+        window.location.reload();
+    }, 6000); // Recarga después de 6 segundos
+}
+
+function lanzarConfeti(cantidad) {
+    const contenedor = document.getElementById('celebration-container');
+    const colors = ['#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#2196f3'];
+    
+    for (let i = 0; i < cantidad; i++) {
+        const confetti = document.createElement('div');
+        confetti.classList.add('confetti');
+        
+        // Asigna un color y posición aleatorios
+        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.backgroundColor = randomColor;
+        confetti.style.left = `${Math.random() * 100}vw`;
+        confetti.style.top = `${-10}vh`; // Empieza arriba de la pantalla
+        
+        // Asigna una duración de animación y un retraso aleatorios
+        const duration = Math.random() * 2 + 1; // 1 a 3 segundos
+        const delay = Math.random() * 0.5; // 0 a 0.5 segundos
+        confetti.style.animationDuration = `${duration}s`;
+        confetti.style.animationDelay = `${delay}s`;
+
+        contenedor.appendChild(confetti);
+        
+        // Elimina el elemento del DOM después de que la animación termine
+        confetti.addEventListener('animationend', () => {
+            confetti.remove();
+        });
+    }
 }
 
 // ----------------------------------------------------
