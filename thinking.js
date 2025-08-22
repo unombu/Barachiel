@@ -123,7 +123,7 @@ function handleAction(action, data) {
   actions.forEach(async (act) => {
     switch (act) {
       case "AUDIO":
-        reproducirAudio(data.AUDIO);
+        reproducirAudio(`${data.AUDIO}.mp3`);
         break;
       case "VERIFY":
         const esValido = await verificar(data.KEYWORD, data.CONSUELO);
