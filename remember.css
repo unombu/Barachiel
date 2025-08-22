@@ -105,10 +105,10 @@ body {
   padding: 10px 15px;
 
   /* Para que el contenedor ocupe todo el ancho disponible del padre */
-  width: 100%; 
+  width: 100%;
   /* Para que el contenedor ocupe la altura disponible,
      su padre (y ancestros hasta html, body) deben tener altura definida. */
-  height: 10%; 
+  height: 10%;
 }
 
 .option-box:hover {
@@ -249,8 +249,12 @@ body {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 body.tv-off {
@@ -275,7 +279,7 @@ body.tv-off {
 }
 
 .overlay::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   left: 50%;
@@ -307,9 +311,9 @@ body.tv-off {
 .orb {
   width: 100px;
   height: 100px;
-  background: radial-gradient(circle, #FFD700, #FFA500, #FF8C00);
+  background: radial-gradient(circle, #ffd700, #ffa500, #ff8c00);
   border-radius: 50%;
-  box-shadow: 0 0 20px 10px #FFD700, 0 0 30px 20px #FFA500;
+  box-shadow: 0 0 20px 10px #ffd700, 0 0 30px 20px #ffa500;
   display: none;
   animation: fadeInOrb 1s 0.5s forwards;
 }
@@ -333,7 +337,7 @@ body.tv-off {
   display: flex;
   flex-direction: column;
   font-family: "Courier Prime", monospace;
-  font-size: 3px ;
+  font-size: 3px;
   color: #a00b94;
 }
 
@@ -361,7 +365,7 @@ body.tv-off {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('../images/stars.jpg');
+  background-image: url("../images/stars.jpg");
   opacity: 60%;
   color: white;
   z-index: 10000;
@@ -454,77 +458,84 @@ body.tv-off {
 
 body.screen-glitch::before,
 body.screen-glitch::after {
-    content: '';
-    position: fixed; /* Fijo para cubrir toda la pantalla */
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    pointer-events: none; /* Permite hacer clic a través de la capa */
-    z-index: 9999; /* Asegura que esté por encima de todo */
+  content: "";
+  position: fixed; /* Fijo para cubrir toda la pantalla */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none; /* Permite hacer clic a través de la capa */
+  z-index: 9999; /* Asegura que esté por encima de todo */
 }
 
 /* Capa roja del glitch */
 body.screen-glitch::before {
-    background-color: rgba(255, 0, 0, 0.15);
-    animation: glitch-effect 0.4s infinite linear alternate-reverse;
+  background-color: rgba(255, 0, 0, 0.15);
+  animation: glitch-effect 0.4s infinite linear alternate-reverse;
 }
 
 /* Capa cian del glitch */
 body.screen-glitch::after {
-    background-color: rgba(0, 255, 255, 0.15);
-    animation: glitch-effect 0.3s infinite linear alternate-reverse;
-    /* Un delay para que no se sincronicen perfectamente */
-    animation-delay: 0.1s;
+  background-color: rgba(0, 255, 255, 0.15);
+  animation: glitch-effect 0.3s infinite linear alternate-reverse;
+  /* Un delay para que no se sincronicen perfectamente */
+  animation-delay: 0.1s;
 }
 
 /* Animación que mueve y corta las capas */
 @keyframes glitch-effect {
-    0% {
-        transform: translate(0);
-        clip-path: polygon(0 2%, 100% 2%, 100% 40%, 0 40%);
-    }
-    25% {
-        transform: translate(5px, -5px);
-        clip-path: polygon(0 15%, 100% 15%, 100% 20%, 0 20%);
-    }
-    50% {
-        transform: translate(-5px, 5px);
-        clip-path: polygon(0 60%, 100% 60%, 100% 75%, 0 75%);
-    }
-    75% {
-        transform: translate(5px, -5px);
-        clip-path: polygon(0 45%, 100% 45%, 100% 55%, 0 55%);
-    }
-    100% {
-        transform: translate(-5px, 0);
-        clip-path: polygon(0 80%, 100% 80%, 100% 90%, 0 90%);
-    }
+  0% {
+    transform: translate(0);
+    clip-path: polygon(0 2%, 100% 2%, 100% 40%, 0 40%);
+  }
+  25% {
+    transform: translate(5px, -5px);
+    clip-path: polygon(0 15%, 100% 15%, 100% 20%, 0 20%);
+  }
+  50% {
+    transform: translate(-5px, 5px);
+    clip-path: polygon(0 60%, 100% 60%, 100% 75%, 0 75%);
+  }
+  75% {
+    transform: translate(5px, -5px);
+    clip-path: polygon(0 45%, 100% 45%, 100% 55%, 0 55%);
+  }
+  100% {
+    transform: translate(-5px, 0);
+    clip-path: polygon(0 80%, 100% 80%, 100% 90%, 0 90%);
+  }
 }
 
 .imagen-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    opacity: 0;
-    transition: opacity 1.5s ease-in-out, transform 1.5s ease-in-out;
-    z-index: 25;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 1.5s ease-in-out, transform 1.5s ease-in-out;
+  z-index: 25;
 }
 
 .imagen-container.visible {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-    animation: abrir-imagen 1.5s forwards;
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+  animation: abrir-imagen 1.5s forwards;
 }
 
 @keyframes abrir-imagen {
-    0% { transform: translate(-50%, -50%) scale(0.1); opacity: 0; }
-    100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  0% {
+    transform: translate(-50%, -50%) scale(0.1);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
 }
 
 #imagen {
-    max-width: 100%;
-    height: auto;
-    display: block;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  z-index: 26;
 }
