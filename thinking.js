@@ -143,6 +143,10 @@ function handleAction(action, data) {
         optionsContainer.innerHTML = "";
         killswitch();
         break;
+      case "IMAGEN":
+        abrirImagen();
+
+        break;
       case "GO_TO_0":
         initializeChat();
         break;
@@ -307,7 +311,6 @@ function killswitch(delay = 2000) {
     return;
   }
   overlay.style.display = "flex";
-  reproducirAudio('LICH.mp3');
   setTimeout(() => {
     window.location.reload();
   }, delay);
@@ -400,6 +403,19 @@ function resetEffect() {
   body.classList.remove("tv-off");
   tvOverlay.classList.remove("active");
   clearTimeout(returnTimer);
+}
+
+function abrirImagen() {
+  const imagenContainer = document.getElementById("imagen-container");
+
+  imagenContainer.classList.add("visible");
+  
+  imagenContainer.addEventListener("click", mostrarMensaje);
+}
+
+function cerrarImagen() {
+  imagenContainer.classList.remove("visible");
+  consolaTexto.style.display = "block";
 }
 
 // ----------------------------------------------------
