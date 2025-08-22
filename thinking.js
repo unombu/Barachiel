@@ -50,9 +50,7 @@ async function initializeChat() {
   await systemMessage("Initiating plain laguage interface . . . Done");
   await sleep(1500);
   await systemMessage("Support session opened.");
-  await sleep(500);
-  await systemMessage("Welcome to my humble abode alien v99.90.0062b,");
-  processResponse(1);
+  await sleep(1500);
 }
 
 async function processResponse(id) {
@@ -148,13 +146,7 @@ function handleAction(action, data) {
         initializeChat();
         break;
       case "SCREAMER":
-        if (data.SCREAMER == "LICH") {
-          lanzarScreamer("/images/lich.jpg", "/audios/lich.mp3");
-          //ONCLICK Q ME LLEVE AL VIDEO DEL LICH Parte 1
-        }
-        if (data.SCREAMER == "BENDER") {
-          lanzarScreamer("path/to/bender.jpg", "path/to/bender-audio.mp3");
-        }
+        lanzarScreamer(`${data.SCREAMER}.jpg`, `${data.SCREAMER}.mp3`);
         backtocheckpoint();
         break;
       case "STARS":
@@ -233,20 +225,19 @@ function verificar(keywords, mensajesConsuelo) {
       resolve(false);
       return;
     }
-    const handleKeyDown = (event) => {
+    const handleKeyDown = async (event) => {
       if (event.key.length === 1 && /[a-zA-Z0-9]/.test(event.key)) {
         palabraActual += event.key.toLowerCase();
       } else if (event.key === "Backspace") {
         palabraActual = palabraActual.slice(0, -1);
       } else if (event.key === "Enter") {
         intentosRestantes--;
-        userMessage(palabraActual);
+        await userMessage(palabraActual);
         if (palabrasClave.includes(palabraActual)) {
           document.removeEventListener("keydown", verificationListener);
           resolve(true);
         } else {
           if (intentosRestantes > 0) {
-            // Lógica corregida para obtener el mensaje
             const mensaje =
               mensajesConsuelo[mensajesConsuelo.length - intentosRestantes];
             systemMessage(mensaje);
@@ -315,6 +306,7 @@ function killswitch(delay = 2000) {
     return;
   }
   overlay.style.display = "flex";
+  reproducirAudio('LICH');
   setTimeout(() => {
     window.location.reload();
   }, delay);

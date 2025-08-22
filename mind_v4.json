@@ -220,19 +220,19 @@
             "AUDIO": "VOCALOID"
         },
         "26": {
-            "contenido": "",
+            "contenido": "Very edgy, let me see what I can do",
             "next": [],
             "action": "AUDIO",
             "AUDIO": "NIGHTWISH"
         },
         "27": {
-            "contenido": "",
+            "contenido": "I see... How about this then?",
             "next": [],
             "action": "AUDIO",
             "AUDIO": "TALOS"
         },
         "28": {
-            "contenido": "",
+            "contenido": "Dreams and reality are sometimes one.",
             "next": [],
             "action": "AUDIO",
             "AUDIO": "CATEDRAL"
@@ -333,6 +333,36 @@
             "contenido": "Why, the author thanks you, and as a token of appreciation let me give you a little hint https://youtu.be/wExIL4ppFO8",
             "next": [],
             "action": "REMOVE_OPTION"
+        },
+        "43": {
+            "contenido": "If you don't know I can probably make a guess... On my last scan I found this they left behind. If this was you, where did you leave it?",
+            "next": [
+                "83",
+                "84",
+                "85",
+                "86"
+            ],
+            "action": "IMAGE"
+        },
+        "44": {
+            "contenido": "Intruder detected, say your prayers",
+            "next": [],
+            "action": ["ERROR", "KILLSWITCH"]
+        },
+        "45": {
+            "contenido": "Great, then you're alien v99.90.0062b, it's weird you don't remember and I thought she contacted you. So many questions. But I need something, you have the keyword. Give it to me, that thing keeps password protecting parts of the archive so I have started to malfunction. With the keyword I can unlock the part of my memory I need to keep helping you.",
+            "next": [
+                "10"
+            ],
+            "action": "VERIFY",
+            "KEYWORD": "SONIC",
+            "CONSUELO": [
+                "Don´t worry, you can try again.",
+                "Nope!",
+                "Is it really you?",
+                "Wow this is taking you a while ain´t it?",
+                "I´m gonna take a nap and let the algorythm do it´s thing..."
+            ]
         }
     },
 
@@ -385,7 +415,7 @@
     },
     "51": {
       "contenido": "I don't understand who I am.",
-      "next": []
+      "next": ["43"]
     },
     "52": {
       "contenido": "I remember",
@@ -561,6 +591,30 @@
       "contenido": "So what do you do for fun?",
       "next": [
         "41"
+      ]
+    },
+    "83": {
+      "contenido": "How should I know?",
+      "next": [
+        "44"
+      ]
+    },
+    "84": {
+      "contenido": "World A",
+      "next": [
+        "44"
+      ]
+    },
+    "85": {
+      "contenido": "World B",
+      "next": [
+        "45"
+      ]
+    },
+    "86": {
+      "contenido": "World C",
+      "next": [
+        "44"
       ]
     }
   }
