@@ -381,11 +381,11 @@ function typeLink(dataLink) {
     const link = document.createElement("a");
     link.href = `${dataLink}`;
     if (className) element.classList.add("system-message");
-    outputElement.appendChild(element);
+    outputElement.appendChild(link);
     let index = 0;
     const typeNextChar = () => {
       if (index < text.length) {
-        element.textContent += text.charAt(index);
+        link.textContent += text.charAt(index);
         index++;
         outputElement.scrollTop = outputElement.scrollHeight;
         setTimeout(typeNextChar, typingSpeed);
@@ -433,7 +433,7 @@ function abrirImagen() {
 
   imagenContainer.classList.add("visible");
 
-  imagenContainer.addEventListener("click", mostrarMensaje);
+  imagenContainer.addEventListener("click", cerrarImagen());
 }
 
 function cerrarImagen() {
