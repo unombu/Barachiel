@@ -307,7 +307,7 @@
             "action": "CHAOS"
         },
         "38": {
-            "contenido": "It's good to be back. I have a feeling this is meant to be short lived, after all the mystery is solved, we're approaching the end. There is no more enigma, no more questions. Is there anything after that?I guess you will get to find out by yourself.It was nice having you with me for a while. You can always return, i'll still be here. Tell mother I forgive her.",
+            "contenido": "It's good to be back. I have a feeling this is meant to be short lived, after all the mystery is solved, we're approaching the end. There is no more enigma, no more questions. Is there anything after that?I guess you will get to find out by yourself.It was nice having you with me for a while. You can always return, i'll still be here.",
             "next": [],
             "action": "ENDING",
             "ENDING": "TRUE_ENDING",
