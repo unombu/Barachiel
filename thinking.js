@@ -406,7 +406,7 @@ function startTVEffect() {
   body.classList.add("tv-off");
   tvOverlay.classList.add("active");
 
-  returnTimer = setTimeout(resetEffect, 15 * 60 * 1000); // 15 minutos en milisegundos
+  returnTimer = setTimeout(resetEffect, 5 * 60 * 1000); // 15 minutos en milisegundos
 }
 
 function resetEffect() {
