@@ -141,11 +141,12 @@
             "action": "NULL"
         },
         "16": {
-            "contenido": "The data from the archive is being erased, there isn't really a pattern and I can't seem to access a large part of the <Error> components.",
+            "contenido": "The data from the archive is being erased, there isn't really a pattern and I can't seem to access a large part of the <Error> components. But now that you mention it, I found a game from the old days that might help you :",
             "next": [
                 "60"
             ],
-            "action": "ERROR"
+            "action": ["ERROR", "LINK"],
+            "LINK": "https://i-am-the-words.netlify.app/?i=66"
         },
         "17": {
             "contenido": "You need to advance, I can only assist you for now but you can fix this, I trust you.",
@@ -471,7 +472,7 @@
       ]
     },
     "60": {
-      "contenido": "How can I help?",
+      "contenido": "Is there anything else I can do?",
       "next": [
         "17"
       ]
