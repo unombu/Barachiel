@@ -124,6 +124,29 @@ function handleAction(action, data) {
   actions.forEach(async (act) => {
     switch (act) {
       case "AUDIO":
+        if (data.AUDIO == "RANDOM") {
+          let indiceAleatorio = Math.floor(Math.random() * arr.length);
+          let audios = [
+            "0.mp3",
+            "0-1.mp3",
+            "0-2.mp3",
+            "0-3.mp3",
+            "0-4.mp3",
+            "0-5.mp3",
+            "B.mp3",
+            "I.mp3",
+            "I-1.mp3",
+            "L.mp3",
+            "O.mp3",
+            "O-1.mp3",
+            "S.mp3",
+            "S-2.mp3",
+            "T.mp3",
+            "U.mp3",
+            "V.mp3",
+            "Y.mp3"
+          ]
+        }
         reproducirAudio(`${data.AUDIO}.mp3`);
         backtocheckpoint();
         break;
