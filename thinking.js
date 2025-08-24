@@ -146,6 +146,7 @@ function handleAction(action, data) {
             "V.mp3",
             "Y.mp3"
           ]
+          reproducirAudio(audios[indiceAleatorio]);
         }
         reproducirAudio(`${data.AUDIO}.mp3`);
         backtocheckpoint();
