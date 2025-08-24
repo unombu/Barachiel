@@ -125,7 +125,6 @@ function handleAction(action, data) {
     switch (act) {
       case "AUDIO":
         if (data.AUDIO == "RANDOM") {
-          let indiceAleatorio = Math.floor(Math.random() * arr.length);
           let audios = [
             "0.mp3",
             "0-1.mp3",
@@ -146,9 +145,11 @@ function handleAction(action, data) {
             "V.mp3",
             "Y.mp3"
           ]
+          let indiceAleatorio = Math.floor(Math.random() * audios.length);
           reproducirAudio(audios[indiceAleatorio]);
+        } else {
+          reproducirAudio(`${data.AUDIO}.mp3`);
         }
-        reproducirAudio(`${data.AUDIO}.mp3`);
         backtocheckpoint();
         break;
       case "VERIFY":
