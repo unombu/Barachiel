@@ -204,6 +204,9 @@ function handleAction(action, data) {
       case "LINK":
         systemMessageWithLink(data.LINK, data.LINK);
         backtocheckpoint();
+        break;
+      case "GO_BACK":
+        backtocheckpoint();
     }
   });
 }
