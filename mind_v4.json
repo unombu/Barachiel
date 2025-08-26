@@ -331,7 +331,7 @@
         "41": {
             "contenido": "Oh ya know, the usual stare into the void while hearing the thousands of whispers, great power for absolute nothing, everyone begs for power yet is left empty after it's only you and nothing. Error 7: hangry.",
             "next": [],
-            "action": "ERROR",
+            "action": ["ERROR", "KILLSWITCH"],
             "ERROR": "HANGRY"
         },
         "42": {
