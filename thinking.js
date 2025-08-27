@@ -196,7 +196,7 @@ function handleAction(action, resData) {
         await systemMessage("No, you won't");
         await sleep(1000);
         startTVEffect();
-        const options = { ...data.opciones[resData.next], id: resData.next };
+        const options = [{ ...data.opciones[resData.next], id: resData.next }];
         currentOptions = options;
         showOptions(options);
         break;
