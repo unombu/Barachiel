@@ -549,18 +549,22 @@ body.screen-glitch::after {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 9999; /* Valor muy alto para que esté por encima de todo */
-  opacity: 0; /* Oculto por defecto */
-  visibility: hidden; /* Oculto y no interactuable */
-  transition: opacity 0.5s ease; /* Para un efecto de aparición suave */
+  z-index: 10001; /* Valor alto para superponerse a otros elementos (como el reboot-overlay) */
+  opacity: 0; /* Por defecto, el contenedor principal es invisible */
+  visibility: hidden;
+  pointer-events: none; /* No interactuable cuando está oculto */
+  transition: opacity 0.5s ease;
 }
 
+/* La clase que hace visible el overlay completo. */
 .celebracion-container.active {
   opacity: 1;
   visibility: visible;
+  pointer-events: auto; /* Permite la interacción cuando es visible */
 }
 
-.celebracion-container.active::before {
+/* El fondo animado se activa junto con el contenedor. */
+.celebracion-container::before {
   content: "";
   position: absolute;
   top: 0;
@@ -570,9 +574,7 @@ body.screen-glitch::after {
   background-image: linear-gradient(45deg, #ff00ff, #00ffff, #ffff00, #ff00ff);
   background-size: 200% 200%;
   animation: rotate-bg 5s infinite linear;
-  opacity: 1; /* Ahora se hace visible al activar la clase .active */
-  transition: opacity 1s ease;
-  z-index: -1; /* Mantenlo detrás del texto */
+  z-index: -1; /* Mantenlo detrás del texto YOU WIN */
 }
 
 @keyframes rotate-bg {
@@ -589,13 +591,12 @@ body.screen-glitch::after {
   background-color: white !important;
 }
 
-/* Estilos iniciales del texto */
+/* Estilos iniciales del texto YOU WIN */
 .win-text {
-  z-index: 10;
+  z-index: 10002; /* Más alto que el contenedor para asegurar que sea visible */
   font-size: 0;
   opacity: 0;
   position: relative;
-  z-index: 10;
   transition: all 0.5s ease-in-out;
 }
 
@@ -607,7 +608,6 @@ body.screen-glitch::after {
   animation: text-pop-in 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
 }
 
-/* Animación de "YOU WIN" que salta */
 @keyframes text-pop-in {
   0% {
     transform: scale(0.5) translateY(-50px);
@@ -643,10 +643,9 @@ body.screen-glitch::after {
   position: absolute;
   width: 10px;
   height: 10px;
-  background-color: red;
   border-radius: 50%;
-  animation: confetti-fall 2s ease-in;
-  z-index: 5;
+  animation: confetti-fall 2s ease-in forwards;
+  z-index: 10002; /* También más alto que el contenedor */
 }
 
 @keyframes confetti-fall {
