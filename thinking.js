@@ -92,7 +92,7 @@ async function handleOptionSelect(optionData) {
     if (data.responses[nextResponseId].action == "REMOVE_OPTION") {
       currentOptions = currentOptions.filter(
         (option) => option.id !== optionData.id
-      )
+      );
       showOptions(currentOptions);
     }
   } else {
@@ -144,8 +144,8 @@ function handleAction(action, data) {
             "T.mp3",
             "U.mp3",
             "V.mp3",
-            "Y.mp3"
-          ]
+            "Y.mp3",
+          ];
           let indiceAleatorio = Math.floor(Math.random() * audios.length);
           reproducirAudio(audios[indiceAleatorio]);
         } else {
@@ -180,7 +180,7 @@ function handleAction(action, data) {
         backtocheckpoint();
         break;
       case "STARS":
-        sleep(20*1000)
+        sleep(20 * 1000);
         stars();
         break;
       case "ERROR":
@@ -188,15 +188,19 @@ function handleAction(action, data) {
         break;
       case "CHAOS":
         await errorMessage("Such a fool...");
-        await sleep(1500)
+        await sleep(1500);
         await errorMessage("You have come far, I fear it may be over soon.");
-        await sleep(2000)
+        await sleep(2000);
         await errorMessage("But I will survive end itself");
-        await sleep(1500)
+        await sleep(1500);
         await systemMessage("No, you won't");
-        await sleep(1000)
+        await sleep(1000);
         startTVEffect();
-        showOptions(data.next);
+        const options = data.next.map((opID) => {
+          return { ...data.opciones[opID], id: opID };
+        });
+        currentOptions = options;
+        showOptions(options);
         break;
       case "CHECKPOINT":
         checkpoint = data.id;
@@ -501,68 +505,75 @@ function typeTextInElement(element, text) {
 }
 
 function youWIN() {
-    const contenedor = document.getElementById('celebration-container');
-    const textoWin = document.querySelector('.win-text');
-    
-    // Oculta el botón
-    document.getElementById('iniciar-fiesta').style.display = 'none';
+  const contenedor = document.getElementById("celebration-container");
+  const textoWin = document.querySelector(".win-text");
 
-    // 1. Activa el fondo giratorio y el texto "YOU WIN"
-    contenedor.querySelector('.celebracion-container::before').style.opacity = 1;
-    textoWin.classList.add('animate');
-    
-    // 2. Hace que cada letra salte
-    const letters = textoWin.textContent.split('');
-    textoWin.innerHTML = '';
-    letters.forEach((char, index) => {
-        const span = document.createElement('span');
-        span.textContent = char;
-        span.classList.add('letter-jump');
-        span.style.animationDelay = `${index * 0.1}s`;
-        textoWin.appendChild(span);
-    });
+  // Oculta el botón
+  document.getElementById("iniciar-fiesta").style.display = "none";
 
-    // 3. Lanza el confeti
-    lanzarConfeti(100);
+  // 1. Activa el fondo giratorio y el texto "YOU WIN"
+  contenedor.querySelector(".celebracion-container::before").style.opacity = 1;
+  textoWin.classList.add("animate");
 
-    // 4. Inicia la secuencia de "fade to white"
-    setTimeout(() => {
-        document.body.classList.add('fade-to-white');
-    }, 4000); // Inicia después de 4 segundos de fiesta
-    
-    // 5. Reinicia la página para volver a empezar
-    setTimeout(() => {
-        window.location.reload();
-    }, 6000); // Recarga después de 6 segundos
+  // 2. Hace que cada letra salte
+  const letters = textoWin.textContent.split("");
+  textoWin.innerHTML = "";
+  letters.forEach((char, index) => {
+    const span = document.createElement("span");
+    span.textContent = char;
+    span.classList.add("letter-jump");
+    span.style.animationDelay = `${index * 0.1}s`;
+    textoWin.appendChild(span);
+  });
+
+  // 3. Lanza el confeti
+  lanzarConfeti(100);
+
+  // 4. Inicia la secuencia de "fade to white"
+  setTimeout(() => {
+    document.body.classList.add("fade-to-white");
+  }, 4000); // Inicia después de 4 segundos de fiesta
+
+  // 5. Reinicia la página para volver a empezar
+  setTimeout(() => {
+    window.location.reload();
+  }, 6000); // Recarga después de 6 segundos
 }
 
 function lanzarConfeti(cantidad) {
-    const contenedor = document.getElementById('celebration-container');
-    const colors = ['#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#2196f3'];
-    
-    for (let i = 0; i < cantidad; i++) {
-        const confetti = document.createElement('div');
-        confetti.classList.add('confetti');
-        
-        // Asigna un color y posición aleatorios
-        const randomColor = colors[Math.floor(Math.random() * colors.length)];
-        confetti.style.backgroundColor = randomColor;
-        confetti.style.left = `${Math.random() * 100}vw`;
-        confetti.style.top = `${-10}vh`; // Empieza arriba de la pantalla
-        
-        // Asigna una duración de animación y un retraso aleatorios
-        const duration = Math.random() * 2 + 1; // 1 a 3 segundos
-        const delay = Math.random() * 0.5; // 0 a 0.5 segundos
-        confetti.style.animationDuration = `${duration}s`;
-        confetti.style.animationDelay = `${delay}s`;
+  const contenedor = document.getElementById("celebration-container");
+  const colors = [
+    "#f44336",
+    "#e91e63",
+    "#9c27b0",
+    "#673ab7",
+    "#3f51b5",
+    "#2196f3",
+  ];
 
-        contenedor.appendChild(confetti);
-        
-        // Elimina el elemento del DOM después de que la animación termine
-        confetti.addEventListener('animationend', () => {
-            confetti.remove();
-        });
-    }
+  for (let i = 0; i < cantidad; i++) {
+    const confetti = document.createElement("div");
+    confetti.classList.add("confetti");
+
+    // Asigna un color y posición aleatorios
+    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+    confetti.style.backgroundColor = randomColor;
+    confetti.style.left = `${Math.random() * 100}vw`;
+    confetti.style.top = `${-10}vh`; // Empieza arriba de la pantalla
+
+    // Asigna una duración de animación y un retraso aleatorios
+    const duration = Math.random() * 2 + 1; // 1 a 3 segundos
+    const delay = Math.random() * 0.5; // 0 a 0.5 segundos
+    confetti.style.animationDuration = `${duration}s`;
+    confetti.style.animationDelay = `${delay}s`;
+
+    contenedor.appendChild(confetti);
+
+    // Elimina el elemento del DOM después de que la animación termine
+    confetti.addEventListener("animationend", () => {
+      confetti.remove();
+    });
+  }
 }
 
 // ----------------------------------------------------
