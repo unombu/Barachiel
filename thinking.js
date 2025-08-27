@@ -157,7 +157,7 @@ function handleAction(action, resData) {
         const esValido = await verificar(resData.KEYWORD, resData.CONSUELO);
         if (esValido) {
           if (resData.next) {
-            processResponse(data.next[0]);
+            processResponse(data.next);
           }
         } else {
           errorMessage("Number of attempts exceeded");
