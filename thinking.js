@@ -506,16 +506,24 @@ function youWIN() {
   const contenedor = document.getElementById("celebration-container");
   const textoWin = document.querySelector(".win-text");
 
+  // Asegúrate de que los elementos existen antes de continuar
+  if (!contenedor || !textoWin) {
+    console.error("Error: Elementos de celebración no encontrados en el DOM.");
+    return;
+  }
+
   // 1. Activa el fondo giratorio y el texto "YOU WIN"
-  contenedor.querySelector(".celebracion-container::before").style.opacity = 1;
+  // Ya no necesitas el selector del pseudo-elemento, solo activas la clase en el contenedor
+  contenedor.classList.add("celebration-active");
   textoWin.classList.add("animate");
 
   // 2. Hace que cada letra salte
-  const letters = textoWin.textContent.split("");
+  const letters = textoWin.textContent.trim().split("");
   textoWin.innerHTML = "";
   letters.forEach((char, index) => {
     const span = document.createElement("span");
-    span.textContent = char;
+    // Asegura que los espacios no se traten como letras
+    span.textContent = char === " " ? " " : char;
     span.classList.add("letter-jump");
     span.style.animationDelay = `${index * 0.1}s`;
     textoWin.appendChild(span);
@@ -527,12 +535,12 @@ function youWIN() {
   // 4. Inicia la secuencia de "fade to white"
   setTimeout(() => {
     document.body.classList.add("fade-to-white");
-  }, 4000); // Inicia después de 4 segundos de fiesta
+  }, 4000); // 4 segundos para que se disfrute la fiesta
 
-  // 5. Reinicia la página para volver a empezar
+  // 5. Reinicia la página
   setTimeout(() => {
     window.location.reload();
-  }, 6000); // Recarga después de 6 segundos
+  }, 6000); // 6 segundos total para el efecto
 }
 
 function lanzarConfeti(cantidad) {
