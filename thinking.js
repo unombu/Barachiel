@@ -119,13 +119,13 @@ function showOptions(options) {
 // ## ACTIONS
 // ----------------------------------------------------
 
-function handleAction(action, data) {
+function handleAction(action, resData) {
   if (!action) return;
   const actions = Array.isArray(action) ? action : [action];
   actions.forEach(async (act) => {
     switch (act) {
       case "AUDIO":
-        if (data.AUDIO == "RANDOM") {
+        if (resData.AUDIO == "RANDOM") {
           let audios = [
             "0.mp3",
             "0-1.mp3",
@@ -149,14 +149,14 @@ function handleAction(action, data) {
           let indiceAleatorio = Math.floor(Math.random() * audios.length);
           reproducirAudio(audios[indiceAleatorio]);
         } else {
-          reproducirAudio(`${data.AUDIO}.mp3`);
+          reproducirAudio(`${resData.AUDIO}.mp3`);
         }
         backtocheckpoint();
         break;
       case "VERIFY":
-        const esValido = await verificar(data.KEYWORD, data.CONSUELO);
+        const esValido = await verificar(resData.KEYWORD, resData.CONSUELO);
         if (esValido) {
-          if (data.next) {
+          if (resData.next) {
             processResponse(data.next[0]);
           }
         } else {
@@ -176,7 +176,7 @@ function handleAction(action, data) {
         abrirImagen();
         break;
       case "SCREAMER":
-        lanzarScreamer(`${data.SCREAMER}.jpg`, `${data.SCREAMER}.mp3`);
+        lanzarScreamer(`${resData.SCREAMER}.jpg`, `${resData.SCREAMER}.mp3`);
         backtocheckpoint();
         break;
       case "STARS":
@@ -196,20 +196,20 @@ function handleAction(action, data) {
         await systemMessage("No, you won't");
         await sleep(1000);
         startTVEffect();
-        const options = data.next.map((opID) => {
+        const options = resData.next.map((opID) => {
           return { ...data.opciones[opID], id: opID };
         });
         currentOptions = options;
         showOptions(options);
         break;
       case "CHECKPOINT":
-        checkpoint = data.id;
+        checkpoint = resData.id;
         break;
       case "ENDING":
         youWIN();
         break;
       case "LINK":
-        systemMessageWithLink(data.LINK, data.LINK);
+        systemMessageWithLink(resData.LINK, resData.LINK);
         backtocheckpoint();
         break;
       case "GO_BACK":
