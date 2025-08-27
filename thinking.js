@@ -73,6 +73,7 @@ async function processResponse(id) {
     responseData.next &&
     responseData.next.length > 0 &&
     !responseData.action.includes("VERIFY")
+    !responseData.action.includes("CHAOS")
   ) {
     const options = responseData.next.map((opID) => {
       return { ...data.opciones[opID], id: opID };
@@ -91,7 +92,7 @@ async function handleOptionSelect(optionData) {
     if (data.responses[nextResponseId].action == "REMOVE_OPTION") {
       currentOptions = currentOptions.filter(
         (option) => option.id !== optionData.id
-      );
+      )
       showOptions(currentOptions);
     }
   } else {
@@ -195,6 +196,7 @@ function handleAction(action, data) {
         await systemMessage("No, you won't");
         await sleep(1000)
         startTVEffect();
+        showOptions(data.next);
         break;
       case "CHECKPOINT":
         checkpoint = data.id;
