@@ -506,9 +506,6 @@ function youWIN() {
   const contenedor = document.getElementById("celebration-container");
   const textoWin = document.querySelector(".win-text");
 
-  // Oculta el botón
-  document.getElementById("iniciar-fiesta").style.display = "none";
-
   // 1. Activa el fondo giratorio y el texto "YOU WIN"
   contenedor.querySelector(".celebracion-container::before").style.opacity = 1;
   textoWin.classList.add("animate");
