@@ -72,7 +72,7 @@ async function processResponse(id) {
   if (
     responseData.next &&
     responseData.next.length > 0 &&
-    !responseData.action.includes("VERIFY")
+    !responseData.action.includes("VERIFY") &&
     !responseData.action.includes("CHAOS")
   ) {
     const options = responseData.next.map((opID) => {
